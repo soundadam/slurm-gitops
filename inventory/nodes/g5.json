@@ -1,0 +1,181 @@
+{
+  "host": "g5",
+  "surveyed": "2026-09-28",
+  "dmi": {
+    "sys_vendor": "System manufacturer",
+    "product_name": "System Product Name",
+    "board_vendor": "ASUSTeK COMPUTER INC.",
+    "board_name": "WS X299 SAGE",
+    "chassis_type": "3",
+    "bios_version": "1201"
+  },
+  "cpu": {
+    "model": "Intel(R) Core(TM) i7-9800X CPU @ 3.80GHz",
+    "sockets": 1,
+    "cores_per_socket": 8,
+    "threads": 16
+  },
+  "memory_gib": 62.5,
+  "gpu": {
+    "driver": "550.90.07",
+    "error": null,
+    "cards": [
+      {
+        "index": 0,
+        "name": "NVIDIA GeForce RTX 3080 Ti",
+        "vram_mib": "12288",
+        "bus": "00000000:19:00.0",
+        "pcie_gen": "3",
+        "pcie_width": "16",
+        "power_w": "250.00"
+      },
+      {
+        "index": 1,
+        "name": "NVIDIA GeForce RTX 3080 Ti",
+        "vram_mib": "12288",
+        "bus": "00000000:1A:00.0",
+        "pcie_gen": "3",
+        "pcie_width": "16",
+        "power_w": "250.00"
+      },
+      {
+        "index": 2,
+        "name": "NVIDIA GeForce RTX 3080 Ti",
+        "vram_mib": "12288",
+        "bus": "00000000:67:00.0",
+        "pcie_gen": "3",
+        "pcie_width": "16",
+        "power_w": "250.00"
+      },
+      {
+        "index": 3,
+        "name": "NVIDIA GeForce RTX 3080 Ti",
+        "vram_mib": "12288",
+        "bus": "00000000:68:00.0",
+        "pcie_gen": "3",
+        "pcie_width": "16",
+        "power_w": "250.00"
+      }
+    ]
+  },
+  "nics": [
+    {
+      "name": "eno1",
+      "pci": "0000:00:1f.6",
+      "model": "Intel Corporation Ethernet Connection (2) I219-LM",
+      "state": "up",
+      "speed_mbps": 1000
+    },
+    {
+      "name": "enp4s0",
+      "pci": "0000:04:00.0",
+      "model": "Intel Corporation I210 Gigabit Network Connection (rev 03)",
+      "state": "up",
+      "speed_mbps": 1000
+    }
+  ],
+  "disks": [
+    {
+      "name": "sda",
+      "kind": "ssd",
+      "tran": "sata",
+      "model": "Samsung_SSD_860_EVO_1TB",
+      "size_gb": 1000,
+      "mounts": [
+        "/data/ssd0"
+      ]
+    },
+    {
+      "name": "sdb",
+      "kind": "hdd",
+      "tran": "sata",
+      "model": "WUH721816ALE6L4",
+      "size_gb": 16001,
+      "mounts": [
+        "/data/hdd1"
+      ]
+    },
+    {
+      "name": "sdc",
+      "kind": "hdd",
+      "tran": "sata",
+      "model": "WDC_WD42EJRX-89BFNY0",
+      "size_gb": 4001,
+      "mounts": [
+        "/data/hdd2"
+      ]
+    },
+    {
+      "name": "sdd",
+      "kind": "ssd",
+      "tran": "sata",
+      "model": "Fanxiang_FP325T_4TB",
+      "size_gb": 4097,
+      "mounts": [
+        "/data/ssd1"
+      ]
+    },
+    {
+      "name": "nvme0n1",
+      "kind": "nvme",
+      "tran": "nvme",
+      "model": "INTEL SSDPEKKW256G8",
+      "size_gb": 256,
+      "mounts": [
+        "/boot/efi",
+        "/"
+      ]
+    }
+  ],
+  "filesystems": [
+    {
+      "source": "/dev/nvme0n1p2",
+      "mount": "/",
+      "size_gb": 250,
+      "used_gb": 31
+    },
+    {
+      "source": "/dev/sda",
+      "mount": "/data/ssd0",
+      "size_gb": 984,
+      "used_gb": 765
+    },
+    {
+      "source": "/dev/sdd1",
+      "mount": "/data/ssd1",
+      "size_gb": 4032,
+      "used_gb": 3100
+    },
+    {
+      "source": "/dev/sdc1",
+      "mount": "/data/hdd2",
+      "size_gb": 3937,
+      "used_gb": 3112
+    },
+    {
+      "source": "/dev/sdb1",
+      "mount": "/data/hdd1",
+      "size_gb": 15874,
+      "used_gb": 12813
+    },
+    {
+      "source": "192.168.50.229:/home/nis",
+      "mount": "/home/nis",
+      "size_gb": 7620,
+      "used_gb": 3920
+    }
+  ],
+  "pci": {
+    "bmc": [],
+    "physical_slots": 12,
+    "infiniband": []
+  },
+  "software": {
+    "os": "20.04",
+    "kernel": "5.15.0-139-generic",
+    "docker": true,
+    "docker_group_size": 0,
+    "apptainer": false,
+    "ipmi_dev": false
+  }
+}

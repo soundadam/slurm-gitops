@@ -1,0 +1,137 @@
+{
+  "host": "g4",
+  "surveyed": "2026-09-28",
+  "dmi": {
+    "sys_vendor": "System manufacturer",
+    "product_name": "System Product Name",
+    "board_vendor": "ASUSTeK COMPUTER INC.",
+    "board_name": "ROG STRIX Z390-H GAMING",
+    "chassis_type": "3",
+    "bios_version": "2417"
+  },
+  "cpu": {
+    "model": "Intel(R) Core(TM) i7-8700 CPU @ 3.20GHz",
+    "sockets": 1,
+    "cores_per_socket": 6,
+    "threads": 12
+  },
+  "memory_gib": 31.2,
+  "gpu": {
+    "driver": "Unable to determine the device handle for GPU0000:02:00.0: Unknown Error",
+    "error": "Unable to determine the device handle for GPU0000:02:00.0: Unknown Error",
+    "cards": []
+  },
+  "nics": [
+    {
+      "name": "eno1",
+      "pci": "0000:00:1f.6",
+      "model": "Intel Corporation Ethernet Connection (7) I219-V (rev 10)",
+      "state": "up",
+      "speed_mbps": 1000
+    }
+  ],
+  "disks": [
+    {
+      "name": "sda",
+      "kind": "ssd",
+      "tran": "sata",
+      "model": "Samsung_SSD_870_EVO_2TB",
+      "size_gb": 2000,
+      "mounts": [
+        "/data/ssd1"
+      ]
+    },
+    {
+      "name": "sdb",
+      "kind": "hdd",
+      "tran": "sata",
+      "model": "WDC_WD20EURS-63S48Y0",
+      "size_gb": 2000,
+      "mounts": [
+        "/data/hdd0"
+      ]
+    },
+    {
+      "name": "sdc",
+      "kind": "ssd",
+      "tran": "sata",
+      "model": "SanDisk_SSD_PLUS_480GB",
+      "size_gb": 480,
+      "mounts": [
+        "/data/ssd0"
+      ]
+    },
+    {
+      "name": "nvme1n1",
+      "kind": "nvme",
+      "tran": "nvme",
+      "model": "INTEL SSDPEKKW256G8",
+      "size_gb": 256,
+      "mounts": [
+        "/",
+        "/boot/efi"
+      ]
+    },
+    {
+      "name": "nvme0n1",
+      "kind": "nvme",
+      "tran": "nvme",
+      "model": "ZHITAI Ti600 1TB",
+      "size_gb": 1000,
+      "mounts": [
+        "/data/ssd2"
+      ]
+    }
+  ],
+  "filesystems": [
+    {
+      "source": "/dev/nvme1n1p1",
+      "mount": "/",
+      "size_gb": 215,
+      "used_gb": 94
+    },
+    {
+      "source": "/dev/nvme0n1p1",
+      "mount": "/data/ssd2",
+      "size_gb": 983,
+      "used_gb": 830
+    },
+    {
+      "source": "/dev/sdc1",
+      "mount": "/data/ssd0",
+      "size_gb": 472,
+      "used_gb": 312
+    },
+    {
+      "source": "/dev/sda1",
+      "mount": "/data/ssd1",
+      "size_gb": 1968,
+      "used_gb": 1757
+    },
+    {
+      "source": "/dev/sdb",
+      "mount": "/data/hdd0",
+      "size_gb": 1968,
+      "used_gb": 1685
+    },
+    {
+      "source": "192.168.50.229:/home/nis",
+      "mount": "/home/nis",
+      "size_gb": 7620,
+      "used_gb": 3920
+    }
+  ],
+  "pci": {
+    "bmc": [],
+    "physical_slots": 2,
+    "infiniband": []
+  },
+  "software": {
+    "os": "20.04",
+    "kernel": "5.15.0-139-generic",
+    "docker": false,
+    "docker_group_size": 0,
+    "apptainer": false,
+    "ipmi_dev": false
+  }
+}

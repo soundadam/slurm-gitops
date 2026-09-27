@@ -1,0 +1,157 @@
+{
+  "host": "g0",
+  "surveyed": "2026-09-28",
+  "dmi": {
+    "sys_vendor": "ASUS",
+    "product_name": "System Product Name",
+    "board_vendor": "ASUSTeK COMPUTER INC.",
+    "board_name": "PRIME Z790-P",
+    "chassis_type": "3",
+    "bios_version": "1661"
+  },
+  "cpu": {
+    "model": "13th Gen Intel(R) Core(TM) i7-13700KF",
+    "sockets": 1,
+    "cores_per_socket": 16,
+    "threads": 24
+  },
+  "memory_gib": 62.6,
+  "gpu": {
+    "driver": "595.91.07",
+    "error": null,
+    "cards": [
+      {
+        "index": 0,
+        "name": "NVIDIA GeForce RTX 3080 Ti",
+        "vram_mib": "12288",
+        "bus": "00000000:01:00.0",
+        "pcie_gen": "4",
+        "pcie_width": "16",
+        "power_w": "245.00"
+      },
+      {
+        "index": 1,
+        "name": "NVIDIA GeForce RTX 3080 Ti",
+        "vram_mib": "12288",
+        "bus": "00000000:05:00.0",
+        "pcie_gen": "4",
+        "pcie_width": "16",
+        "power_w": "245.00"
+      }
+    ]
+  },
+  "nics": [
+    {
+      "name": "eno1",
+      "pci": "0000:07:00.0",
+      "model": "Realtek Semiconductor Co., Ltd. RTL8125 2.5GbE Controller (rev 05)",
+      "state": "up",
+      "speed_mbps": 1000
+    }
+  ],
+  "disks": [
+    {
+      "name": "sda",
+      "kind": "ssd",
+      "tran": "sata",
+      "model": "ZHITAI SC001 XT 2000GB",
+      "size_gb": 2000,
+      "mounts": [
+        "/data/ssd1"
+      ]
+    },
+    {
+      "name": "sdb",
+      "kind": "ssd",
+      "tran": "sata",
+      "model": "SanDisk SSD PLUS 480GB",
+      "size_gb": 480,
+      "mounts": [
+        "/boot/efi",
+        "/",
+        "[SWAP]"
+      ]
+    },
+    {
+      "name": "sdc",
+      "kind": "hdd",
+      "tran": "sata",
+      "model": "WDC WD40EZAX-00C8UB0",
+      "size_gb": 4001,
+      "mounts": [
+        "/data/hdd1"
+      ]
+    },
+    {
+      "name": "sdd",
+      "kind": "hdd",
+      "tran": "sata",
+      "model": "WDC WD20EFRX-68EUZN0",
+      "size_gb": 2000,
+      "mounts": [
+        "/data/hdd0"
+      ]
+    },
+    {
+      "name": "nvme0n1",
+      "kind": "nvme",
+      "tran": "nvme",
+      "model": "ZHITAI Ti600 1TB",
+      "size_gb": 1000,
+      "mounts": [
+        "/data/ssd0"
+      ]
+    }
+  ],
+  "filesystems": [
+    {
+      "source": "/dev/sdb2",
+      "mount": "/",
+      "size_gb": 455,
+      "used_gb": 29
+    },
+    {
+      "source": "/dev/nvme0n1p1",
+      "mount": "/data/ssd0",
+      "size_gb": 983,
+      "used_gb": 900
+    },
+    {
+      "source": "/dev/sda1",
+      "mount": "/data/ssd1",
+      "size_gb": 1968,
+      "used_gb": 1794
+    },
+    {
+      "source": "/dev/sdc2",
+      "mount": "/data/hdd1",
+      "size_gb": 4001,
+      "used_gb": 3523
+    },
+    {
+      "source": "/dev/sdd4",
+      "mount": "/data/hdd0",
+      "size_gb": 1893,
+      "used_gb": 1489
+    },
+    {
+      "source": "192.168.50.229:/home/nis",
+      "mount": "/home/nis",
+      "size_gb": 7620,
+      "used_gb": 3920
+    }
+  ],
+  "pci": {
+    "bmc": [],
+    "physical_slots": 3,
+    "infiniband": []
+  },
+  "software": {
+    "os": "22.04",
+    "kernel": "6.8.0-138-generic",
+    "docker": false,
+    "docker_group_size": 0,
+    "apptainer": false,
+    "ipmi_dev": false
+  }
+}

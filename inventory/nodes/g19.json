@@ -1,0 +1,220 @@
+{
+  "host": "g19.nca",
+  "surveyed": "2026-09-28",
+  "dmi": {
+    "sys_vendor": "PUERSAI",
+    "product_name": "PGA443-D08L",
+    "board_vendor": "ODM",
+    "board_name": "BM-H12DEP",
+    "chassis_type": "23",
+    "bios_version": "1.08.01"
+  },
+  "cpu": {
+    "model": "AMD EPYC 7A23 48-Core Processor",
+    "sockets": 2,
+    "cores_per_socket": 48,
+    "threads": 192
+  },
+  "memory_gib": 503.7,
+  "gpu": {
+    "driver": "550.90.07",
+    "error": null,
+    "cards": [
+      {
+        "index": 0,
+        "name": "NVIDIA GeForce RTX 4090",
+        "vram_mib": "49140",
+        "bus": "00000000:01:00.0",
+        "pcie_gen": "4",
+        "pcie_width": "16",
+        "power_w": "350.00"
+      },
+      {
+        "index": 1,
+        "name": "NVIDIA GeForce RTX 4090",
+        "vram_mib": "49140",
+        "bus": "00000000:21:00.0",
+        "pcie_gen": "4",
+        "pcie_width": "16",
+        "power_w": "350.00"
+      },
+      {
+        "index": 2,
+        "name": "NVIDIA GeForce RTX 4090",
+        "vram_mib": "49140",
+        "bus": "00000000:41:00.0",
+        "pcie_gen": "4",
+        "pcie_width": "16",
+        "power_w": "350.00"
+      },
+      {
+        "index": 3,
+        "name": "NVIDIA GeForce RTX 4090",
+        "vram_mib": "49140",
+        "bus": "00000000:61:00.0",
+        "pcie_gen": "4",
+        "pcie_width": "16",
+        "power_w": "350.00"
+      },
+      {
+        "index": 4,
+        "name": "NVIDIA GeForce RTX 4090",
+        "vram_mib": "49140",
+        "bus": "00000000:81:00.0",
+        "pcie_gen": "4",
+        "pcie_width": "16",
+        "power_w": "350.00"
+      },
+      {
+        "index": 5,
+        "name": "NVIDIA GeForce RTX 4090",
+        "vram_mib": "49140",
+        "bus": "00000000:A1:00.0",
+        "pcie_gen": "4",
+        "pcie_width": "16",
+        "power_w": "350.00"
+      },
+      {
+        "index": 6,
+        "name": "NVIDIA GeForce RTX 4090",
+        "vram_mib": "49140",
+        "bus": "00000000:C2:00.0",
+        "pcie_gen": "4",
+        "pcie_width": "16",
+        "power_w": "350.00"
+      },
+      {
+        "index": 7,
+        "name": "NVIDIA GeForce RTX 4090",
+        "vram_mib": "49140",
+        "bus": "00000000:E1:00.0",
+        "pcie_gen": "4",
+        "pcie_width": "16",
+        "power_w": "350.00"
+      }
+    ]
+  },
+  "nics": [
+    {
+      "name": "enp193s0f0",
+      "pci": "0000:c1:00.0",
+      "model": "Intel Corporation I350 Gigabit Network Connection (rev 01)",
+      "state": "up",
+      "speed_mbps": 1000
+    },
+    {
+      "name": "enp193s0f1",
+      "pci": "0000:c1:00.1",
+      "model": "Intel Corporation I350 Gigabit Network Connection (rev 01)",
+      "state": "down",
+      "speed_mbps": null
+    }
+  ],
+  "disks": [
+    {
+      "name": "sda",
+      "kind": "ssd",
+      "tran": "sata",
+      "model": "WD Blue SA510 2.5 4TB SSD",
+      "size_gb": 4001,
+      "mounts": [
+        "/data/ssd0"
+      ]
+    },
+    {
+      "name": "sdb",
+      "kind": "ssd",
+      "tran": "sata",
+      "model": "WD Blue SA510 2.5 4TB SSD",
+      "size_gb": 4001,
+      "mounts": [
+        "/data/ssd1"
+      ]
+    },
+    {
+      "name": "sdc",
+      "kind": "hdd",
+      "tran": "sata",
+      "model": "WUH721816ALE6L4",
+      "size_gb": 16001,
+      "mounts": [
+        "/data/hdd0"
+      ]
+    },
+    {
+      "name": "sdd",
+      "kind": "ssd",
+      "tran": "sata",
+      "model": "SD Ultra 3D 4TB",
+      "size_gb": 4001,
+      "mounts": [
+        "/data/ssd6"
+      ]
+    },
+    {
+      "name": "nvme0n1",
+      "kind": "nvme",
+      "tran": "nvme",
+      "model": "INTEL SSDPF2KX960HZ",
+      "size_gb": 960,
+      "mounts": [
+        "/boot/efi",
+        "/"
+      ]
+    }
+  ],
+  "filesystems": [
+    {
+      "source": "/dev/nvme0n1p2",
+      "mount": "/",
+      "size_gb": 943,
+      "used_gb": 214
+    },
+    {
+      "source": "192.168.50.229:/home/nis",
+      "mount": "/home/nis",
+      "size_gb": 7620,
+      "used_gb": 3920
+    },
+    {
+      "source": "/dev/sdc1",
+      "mount": "/data/hdd0",
+      "size_gb": 15874,
+      "used_gb": 5259
+    },
+    {
+      "source": "/dev/sda1",
+      "mount": "/data/ssd0",
+      "size_gb": 3937,
+      "used_gb": 3730
+    },
+    {
+      "source": "/dev/sdb1",
+      "mount": "/data/ssd1",
+      "size_gb": 3937,
+      "used_gb": 3485
+    },
+    {
+      "source": "/dev/sdd1",
+      "mount": "/data/ssd6",
+      "size_gb": 3937,
+      "used_gb": 3737
+    }
+  ],
+  "pci": {
+    "bmc": [
+      "ASPEED Technology, Inc. AST1150 PCI-to-PCI Bridge (rev 06)",
+      "ASPEED Technology, Inc. ASPEED Graphics Family (rev 52)"
+    ],
+    "physical_slots": 2,
+    "infiniband": []
+  },
+  "software": {
+    "os": "22.04",
+    "kernel": "6.8.0-136-generic",
+    "docker": true,
+    "docker_group_size": 2,
+    "apptainer": false,
+    "ipmi_dev": true
+  }
+}

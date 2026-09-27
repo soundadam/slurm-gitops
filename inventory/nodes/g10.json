@@ -1,0 +1,124 @@
+{
+  "host": "g10",
+  "surveyed": "2026-09-28",
+  "dmi": {
+    "sys_vendor": "ASUS",
+    "product_name": "System Product Name",
+    "board_vendor": "ASUSTeK COMPUTER INC.",
+    "board_name": "PRIME Z790-P D4",
+    "chassis_type": "3",
+    "bios_version": "1805"
+  },
+  "cpu": {
+    "model": "13th Gen Intel(R) Core(TM) i7-13700F",
+    "sockets": 1,
+    "cores_per_socket": 16,
+    "threads": 24
+  },
+  "memory_gib": 31.1,
+  "gpu": {
+    "driver": "560.35.05",
+    "error": null,
+    "cards": [
+      {
+        "index": 0,
+        "name": "NVIDIA GeForce RTX 4070",
+        "vram_mib": "12282",
+        "bus": "00000000:01:00.0",
+        "pcie_gen": "4",
+        "pcie_width": "16",
+        "power_w": "200.00"
+      },
+      {
+        "index": 1,
+        "name": "NVIDIA GeForce RTX 4070",
+        "vram_mib": "12282",
+        "bus": "00000000:05:00.0",
+        "pcie_gen": "4",
+        "pcie_width": "16",
+        "power_w": "200.00"
+      }
+    ]
+  },
+  "nics": [
+    {
+      "name": "eno1",
+      "pci": "0000:07:00.0",
+      "model": "Realtek Semiconductor Co., Ltd. RTL8125 2.5GbE Controller (rev 05)",
+      "state": "up",
+      "speed_mbps": 1000
+    }
+  ],
+  "disks": [
+    {
+      "name": "sda",
+      "kind": "ssd",
+      "tran": "sata",
+      "model": "SanDisk SSD PLUS 2000GB",
+      "size_gb": 2000,
+      "mounts": [
+        "/data/ssd0"
+      ]
+    },
+    {
+      "name": "nvme0n1",
+      "kind": "nvme",
+      "tran": "nvme",
+      "model": "ZHITAI TiPlus5000 512GB",
+      "size_gb": 512,
+      "mounts": [
+        "/boot/efi",
+        "/"
+      ]
+    },
+    {
+      "name": "nvme1n1",
+      "kind": "nvme",
+      "tran": "nvme",
+      "model": "ZHITAI TiPlus5000 1TB",
+      "size_gb": 1024,
+      "mounts": [
+        "/data/ssd1"
+      ]
+    }
+  ],
+  "filesystems": [
+    {
+      "source": "/dev/nvme0n1p2",
+      "mount": "/",
+      "size_gb": 502,
+      "used_gb": 42
+    },
+    {
+      "source": "/dev/nvme1n1p1",
+      "mount": "/data/ssd1",
+      "size_gb": 1007,
+      "used_gb": 817
+    },
+    {
+      "source": "/dev/sda1",
+      "mount": "/data/ssd0",
+      "size_gb": 1968,
+      "used_gb": 1838
+    },
+    {
+      "source": "192.168.50.229:/home/nis",
+      "mount": "/home/nis",
+      "size_gb": 7620,
+      "used_gb": 3920
+    }
+  ],
+  "pci": {
+    "bmc": [],
+    "physical_slots": 2,
+    "infiniband": []
+  },
+  "software": {
+    "os": "22.04",
+    "kernel": "6.8.0-136-generic",
+    "docker": false,
+    "docker_group_size": 0,
+    "apptainer": false,
+    "ipmi_dev": false
+  }
+}

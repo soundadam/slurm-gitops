@@ -1,0 +1,109 @@
+{
+  "host": "g17",
+  "surveyed": "2026-09-28",
+  "dmi": {
+    "sys_vendor": "ASUS",
+    "product_name": "System Product Name",
+    "board_vendor": "ASUSTeK COMPUTER INC.",
+    "board_name": "PRIME Z790-P",
+    "chassis_type": "3",
+    "bios_version": "1805"
+  },
+  "cpu": {
+    "model": "13th Gen Intel(R) Core(TM) i7-13700KF",
+    "sockets": 1,
+    "cores_per_socket": 16,
+    "threads": 24
+  },
+  "memory_gib": 62.6,
+  "gpu": {
+    "driver": "550.163.01",
+    "error": null,
+    "cards": [
+      {
+        "index": 0,
+        "name": "NVIDIA GeForce RTX 3090",
+        "vram_mib": "24576",
+        "bus": "00000000:01:00.0",
+        "pcie_gen": "4",
+        "pcie_width": "16",
+        "power_w": "250.00"
+      },
+      {
+        "index": 1,
+        "name": "NVIDIA GeForce RTX 3090",
+        "vram_mib": "24576",
+        "bus": "00000000:05:00.0",
+        "pcie_gen": "4",
+        "pcie_width": "16",
+        "power_w": "250.00"
+      }
+    ]
+  },
+  "nics": [
+    {
+      "name": "eno1",
+      "pci": "0000:07:00.0",
+      "model": "Realtek Semiconductor Co., Ltd. RTL8125 2.5GbE Controller (rev 05)",
+      "state": "up",
+      "speed_mbps": 1000
+    }
+  ],
+  "disks": [
+    {
+      "name": "sda",
+      "kind": "hdd",
+      "tran": "sata",
+      "model": "WDC WD10EZEX-08WN4A1",
+      "size_gb": 1000,
+      "mounts": [
+        "/data/ssd0"
+      ]
+    },
+    {
+      "name": "nvme0n1",
+      "kind": "nvme",
+      "tran": "nvme",
+      "model": "ZHITAI Ti600 1TB",
+      "size_gb": 1000,
+      "mounts": [
+        "[SWAP]",
+        "/boot/efi",
+        "/"
+      ]
+    }
+  ],
+  "filesystems": [
+    {
+      "source": "/dev/nvme0n1p3",
+      "mount": "/",
+      "size_gb": 934,
+      "used_gb": 42
+    },
+    {
+      "source": "/dev/sda1",
+      "mount": "/data/ssd0",
+      "size_gb": 983,
+      "used_gb": 761
+    },
+    {
+      "source": "192.168.50.229:/home/nis",
+      "mount": "/home/nis",
+      "size_gb": 7620,
+      "used_gb": 3920
+    }
+  ],
+  "pci": {
+    "bmc": [],
+    "physical_slots": 3,
+    "infiniband": []
+  },
+  "software": {
+    "os": "22.04",
+    "kernel": "6.8.0-136-generic",
+    "docker": false,
+    "docker_group_size": 0,
+    "apptainer": false,
+    "ipmi_dev": false
+  }
+}

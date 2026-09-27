@@ -1,0 +1,108 @@
+{
+  "host": "g16.nca",
+  "surveyed": "2026-09-28",
+  "dmi": {
+    "sys_vendor": "ASUS",
+    "product_name": "System Product Name",
+    "board_vendor": "ASUSTeK COMPUTER INC.",
+    "board_name": "PRIME Z790-P D4",
+    "chassis_type": "3",
+    "bios_version": "0411"
+  },
+  "cpu": {
+    "model": "12th Gen Intel(R) Core(TM) i7-12700F",
+    "sockets": 1,
+    "cores_per_socket": 12,
+    "threads": 20
+  },
+  "memory_gib": 31.2,
+  "gpu": {
+    "driver": "580.178.04",
+    "error": null,
+    "cards": [
+      {
+        "index": 0,
+        "name": "NVIDIA GeForce RTX 3060",
+        "vram_mib": "12288",
+        "bus": "00000000:01:00.0",
+        "pcie_gen": "4",
+        "pcie_width": "16",
+        "power_w": "150.00"
+      },
+      {
+        "index": 1,
+        "name": "NVIDIA GeForce RTX 3060",
+        "vram_mib": "12288",
+        "bus": "00000000:05:00.0",
+        "pcie_gen": "4",
+        "pcie_width": "16",
+        "power_w": "150.00"
+      }
+    ]
+  },
+  "nics": [
+    {
+      "name": "eno1",
+      "pci": "0000:07:00.0",
+      "model": "Realtek Semiconductor Co., Ltd. RTL8125 2.5GbE Controller (rev 05)",
+      "state": "up",
+      "speed_mbps": 1000
+    }
+  ],
+  "disks": [
+    {
+      "name": "nvme0n1",
+      "kind": "nvme",
+      "tran": "nvme",
+      "model": "SAMSUNG MZVL2512HCJQ-00BL7",
+      "size_gb": 512,
+      "mounts": [
+        "/boot/efi",
+        "/"
+      ]
+    },
+    {
+      "name": "nvme1n1",
+      "kind": "nvme",
+      "tran": "nvme",
+      "model": "Samsung SSD 980 1TB",
+      "size_gb": 1000,
+      "mounts": [
+        "/data/ssd0"
+      ]
+    }
+  ],
+  "filesystems": [
+    {
+      "source": "/dev/nvme0n1p2",
+      "mount": "/",
+      "size_gb": 502,
+      "used_gb": 160
+    },
+    {
+      "source": "/dev/nvme1n1p1",
+      "mount": "/data/ssd0",
+      "size_gb": 983,
+      "used_gb": 851
+    },
+    {
+      "source": "192.168.50.229:/home/nis",
+      "mount": "/home/nis",
+      "size_gb": 7620,
+      "used_gb": 3920
+    }
+  ],
+  "pci": {
+    "bmc": [],
+    "physical_slots": 2,
+    "infiniband": []
+  },
+  "software": {
+    "os": "22.04",
+    "kernel": "6.8.0-138-generic",
+    "docker": false,
+    "docker_group_size": 0,
+    "apptainer": false,
+    "ipmi_dev": false
+  }
+}

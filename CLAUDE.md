@@ -8,9 +8,13 @@ aalab GPU 集群的 Slurm 方案。仓库是什么、动手前的约束在
 | 要找 | 读 |
 | --- | --- |
 | 哪个问题去哪份文档 | [docs/README.md](docs/README.md) |
-| 节点清单 | [docs/inventory.md](docs/inventory.md) |
+| 节点硬件 | [docs/inventory.md](docs/inventory.md) |
 | 还差什么 | [docs/rollout.md](docs/rollout.md) |
 
-## Verify
+## Commands
+
+```sh
+tools/survey.sh   # 重新采集各节点硬件，并重新生成 docs/inventory.md
+```
 
 没有本地检查。

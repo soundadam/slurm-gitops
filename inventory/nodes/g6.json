@@ -1,0 +1,147 @@
+{
+  "host": "g6",
+  "surveyed": "2026-09-28",
+  "dmi": {
+    "sys_vendor": "Gigabyte Technology Co., Ltd.",
+    "product_name": "Z490 UD",
+    "board_vendor": "Gigabyte Technology Co., Ltd.",
+    "board_name": "Z490 UD",
+    "chassis_type": "3",
+    "bios_version": "F3"
+  },
+  "cpu": {
+    "model": "Intel(R) Core(TM) i7-10700 CPU @ 2.90GHz",
+    "sockets": 1,
+    "cores_per_socket": 8,
+    "threads": 16
+  },
+  "memory_gib": 31.3,
+  "gpu": {
+    "driver": "580.178.04",
+    "error": null,
+    "cards": [
+      {
+        "index": 0,
+        "name": "NVIDIA GeForce RTX 3090",
+        "vram_mib": "24576",
+        "bus": "00000000:01:00.0",
+        "pcie_gen": "3",
+        "pcie_width": "16",
+        "power_w": "250.00"
+      }
+    ]
+  },
+  "nics": [
+    {
+      "name": "enp5s0",
+      "pci": "0000:05:00.0",
+      "model": "Realtek Semiconductor Co., Ltd. RTL8111/8168/8411 PCI Express Gigabit Ethernet Controller (rev 16)",
+      "state": "up",
+      "speed_mbps": 1000
+    }
+  ],
+  "disks": [
+    {
+      "name": "sda",
+      "kind": "hdd",
+      "tran": "sata",
+      "model": "TOSHIBA HDWD130",
+      "size_gb": 3001,
+      "mounts": [
+        "/data/hdd0"
+      ]
+    },
+    {
+      "name": "sdb",
+      "kind": "ssd",
+      "tran": "sata",
+      "model": "WDC WDS100T2B0A-00SM50",
+      "size_gb": 1000,
+      "mounts": [
+        "/data/ssd0"
+      ]
+    },
+    {
+      "name": "nvme1n1",
+      "kind": "nvme",
+      "tran": "nvme",
+      "model": "WD Blue SN570 1TB SSD",
+      "size_gb": 1000,
+      "mounts": [
+        "/data/ssd2"
+      ]
+    },
+    {
+      "name": "nvme0n1",
+      "kind": "nvme",
+      "tran": "nvme",
+      "model": "SAMSUNG MZVLB256HBHQ-00A00",
+      "size_gb": 256,
+      "mounts": [
+        "/boot/efi",
+        "/"
+      ]
+    },
+    {
+      "name": "nvme2n1",
+      "kind": "nvme",
+      "tran": "nvme",
+      "model": "WD Blue SN570 1TB SSD",
+      "size_gb": 1000,
+      "mounts": [
+        "/data/ssd1"
+      ]
+    }
+  ],
+  "filesystems": [
+    {
+      "source": "/dev/nvme0n1p2",
+      "mount": "/",
+      "size_gb": 250,
+      "used_gb": 47
+    },
+    {
+      "source": "/dev/nvme2n1p1",
+      "mount": "/data/ssd1",
+      "size_gb": 984,
+      "used_gb": 928
+    },
+    {
+      "source": "/dev/nvme1n1p1",
+      "mount": "/data/ssd2",
+      "size_gb": 984,
+      "used_gb": 658
+    },
+    {
+      "source": "/dev/sdb",
+      "mount": "/data/ssd0",
+      "size_gb": 984,
+      "used_gb": 454
+    },
+    {
+      "source": "/dev/sda",
+      "mount": "/data/hdd0",
+      "size_gb": 2953,
+      "used_gb": 1327
+    },
+    {
+      "source": "192.168.50.229:/home/nis",
+      "mount": "/home/nis",
+      "size_gb": 7620,
+      "used_gb": 3920
+    }
+  ],
+  "pci": {
+    "bmc": [],
+    "physical_slots": 3,
+    "infiniband": []
+  },
+  "software": {
+    "os": "22.04",
+    "kernel": "6.8.0-138-generic",
+    "docker": false,
+    "docker_group_size": 0,
+    "apptainer": false,
+    "ipmi_dev": false
+  }
+}

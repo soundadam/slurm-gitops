@@ -1,0 +1,251 @@
+{
+  "host": "g18",
+  "surveyed": "2026-09-28",
+  "dmi": {
+    "sys_vendor": "New H3C Technologies Co., Ltd.",
+    "product_name": "H3C UniServer R5300 G6",
+    "board_vendor": "H3C",
+    "board_name": "BS56M2C20SA",
+    "chassis_type": "23",
+    "bios_version": "6.10.51"
+  },
+  "cpu": {
+    "model": "Intel(R) Xeon(R) Platinum 8473C",
+    "sockets": 2,
+    "cores_per_socket": 52,
+    "threads": 208
+  },
+  "memory_gib": 1007.5,
+  "gpu": {
+    "driver": "595.91.07",
+    "error": null,
+    "cards": [
+      {
+        "index": 0,
+        "name": "NVIDIA RTX 5880 Ada Generation",
+        "vram_mib": "49140",
+        "bus": "00000000:08:00.0",
+        "pcie_gen": "4",
+        "pcie_width": "16",
+        "power_w": "285.00"
+      },
+      {
+        "index": 1,
+        "name": "NVIDIA RTX 5880 Ada Generation",
+        "vram_mib": "49140",
+        "bus": "00000000:09:00.0",
+        "pcie_gen": "4",
+        "pcie_width": "16",
+        "power_w": "285.00"
+      },
+      {
+        "index": 2,
+        "name": "NVIDIA RTX 5880 Ada Generation",
+        "vram_mib": "49140",
+        "bus": "00000000:0E:00.0",
+        "pcie_gen": "4",
+        "pcie_width": "16",
+        "power_w": "285.00"
+      },
+      {
+        "index": 3,
+        "name": "NVIDIA RTX 5880 Ada Generation",
+        "vram_mib": "49140",
+        "bus": "00000000:11:00.0",
+        "pcie_gen": "4",
+        "pcie_width": "16",
+        "power_w": "285.00"
+      },
+      {
+        "index": 4,
+        "name": "NVIDIA RTX 5880 Ada Generation",
+        "vram_mib": "49140",
+        "bus": "00000000:16:00.0",
+        "pcie_gen": "4",
+        "pcie_width": "16",
+        "power_w": "285.00"
+      },
+      {
+        "index": 5,
+        "name": "NVIDIA RTX 5880 Ada Generation",
+        "vram_mib": "49140",
+        "bus": "00000000:1C:00.0",
+        "pcie_gen": "4",
+        "pcie_width": "16",
+        "power_w": "285.00"
+      },
+      {
+        "index": 6,
+        "name": "NVIDIA RTX 5880 Ada Generation",
+        "vram_mib": "49140",
+        "bus": "00000000:1F:00.0",
+        "pcie_gen": "4",
+        "pcie_width": "16",
+        "power_w": "285.00"
+      },
+      {
+        "index": 7,
+        "name": "NVIDIA RTX 5880 Ada Generation",
+        "vram_mib": "49140",
+        "bus": "00000000:20:00.0",
+        "pcie_gen": "4",
+        "pcie_width": "16",
+        "power_w": "285.00"
+      }
+    ]
+  },
+  "nics": [
+    {
+      "name": "ens4f0",
+      "pci": "0000:a8:00.0",
+      "model": "Intel Corporation I350 Gigabit Network Connection (rev 01)",
+      "state": "down",
+      "speed_mbps": null
+    },
+    {
+      "name": "ens4f1",
+      "pci": "0000:a8:00.1",
+      "model": "Intel Corporation I350 Gigabit Network Connection (rev 01)",
+      "state": "down",
+      "speed_mbps": null
+    },
+    {
+      "name": "ens4f2",
+      "pci": "0000:a8:00.2",
+      "model": "Intel Corporation I350 Gigabit Network Connection (rev 01)",
+      "state": "down",
+      "speed_mbps": null
+    },
+    {
+      "name": "ens4f3",
+      "pci": "0000:a8:00.3",
+      "model": "Intel Corporation I350 Gigabit Network Connection (rev 01)",
+      "state": "up",
+      "speed_mbps": 1000
+    }
+  ],
+  "disks": [
+    {
+      "name": "sda",
+      "kind": "hdd",
+      "tran": "sata",
+      "model": "WDC WUH722424ALE6L4",
+      "size_gb": 24000,
+      "mounts": [
+        "/data/hdd0"
+      ]
+    },
+    {
+      "name": "sdb",
+      "kind": "ssd",
+      "tran": "sata",
+      "model": "ZHITAI SC001 XT 2000GB",
+      "size_gb": 2000,
+      "mounts": [
+        "/data/ssd3"
+      ]
+    },
+    {
+      "name": "sdc",
+      "kind": "ssd",
+      "tran": "sata",
+      "model": "WD Blue SA510 2.5 4TB SSD",
+      "size_gb": 4001,
+      "mounts": [
+        "/data/ssd0"
+      ]
+    },
+    {
+      "name": "nvme0n1",
+      "kind": "nvme",
+      "tran": "nvme",
+      "model": "UP2A61T9SD004LX",
+      "size_gb": 1920,
+      "mounts": [
+        "/data/ssd4"
+      ]
+    },
+    {
+      "name": "nvme1n1",
+      "kind": "nvme",
+      "tran": "nvme",
+      "model": "UP2A61T9SD004LX",
+      "size_gb": 1920,
+      "mounts": [
+        "/boot/efi",
+        "[SWAP]",
+        "/"
+      ]
+    },
+    {
+      "name": "nvme2n1",
+      "kind": "nvme",
+      "tran": "nvme",
+      "model": "SAMSUNG MZQL23T8HCLS-00B7C",
+      "size_gb": 3841,
+      "mounts": [
+        "/data/ssd1"
+      ]
+    }
+  ],
+  "filesystems": [
+    {
+      "source": "/dev/nvme1n1p3",
+      "mount": "/",
+      "size_gb": 1826,
+      "used_gb": 38
+    },
+    {
+      "source": "/dev/sdb1",
+      "mount": "/data/ssd3",
+      "size_gb": 1968,
+      "used_gb": 1853
+    },
+    {
+      "source": "/dev/nvme0n1p1",
+      "mount": "/data/ssd4",
+      "size_gb": 1889,
+      "used_gb": 1617
+    },
+    {
+      "source": "/dev/nvme2n1p1",
+      "mount": "/data/ssd1",
+      "size_gb": 3779,
+      "used_gb": 3396
+    },
+    {
+      "source": "/dev/sdc1",
+      "mount": "/data/ssd0",
+      "size_gb": 3937,
+      "used_gb": 3625
+    },
+    {
+      "source": "/dev/sda1",
+      "mount": "/data/hdd0",
+      "size_gb": 23904,
+      "used_gb": 22463
+    },
+    {
+      "source": "192.168.50.229:/home/nis",
+      "mount": "/home/nis",
+      "size_gb": 7620,
+      "used_gb": 3920
+    }
+  ],
+  "pci": {
+    "bmc": [
+      "ASPEED Technology, Inc. AST1150 PCI-to-PCI Bridge (rev 06)",
+      "ASPEED Technology, Inc. ASPEED Graphics Family (rev 52)"
+    ],
+    "physical_slots": 19,
+    "infiniband": []
+  },
+  "software": {
+    "os": "22.04",
+    "kernel": "6.8.0-138-generic",
+    "docker": false,
+    "docker_group_size": 0,
+    "apptainer": false,
+    "ipmi_dev": true
+  }
+}

@@ -1,0 +1,244 @@
+{
+  "host": "g9",
+  "surveyed": "2026-09-28",
+  "dmi": {
+    "sys_vendor": "Supermicro",
+    "product_name": "SYS-4029GP-TRT-BA001",
+    "board_vendor": "Supermicro",
+    "board_name": "X11DPG-OT-CPU",
+    "chassis_type": "1",
+    "bios_version": "3.4"
+  },
+  "cpu": {
+    "model": "Intel(R) Xeon(R) Silver 4114 CPU @ 2.20GHz",
+    "sockets": 2,
+    "cores_per_socket": 10,
+    "threads": 40
+  },
+  "memory_gib": 93.1,
+  "gpu": {
+    "driver": "595.91.07",
+    "error": null,
+    "cards": [
+      {
+        "index": 0,
+        "name": "NVIDIA GeForce RTX 3090",
+        "vram_mib": "24576",
+        "bus": "00000000:3D:00.0",
+        "pcie_gen": "3",
+        "pcie_width": "16",
+        "power_w": "250.00"
+      },
+      {
+        "index": 1,
+        "name": "NVIDIA GeForce RTX 3090",
+        "vram_mib": "24576",
+        "bus": "00000000:3E:00.0",
+        "pcie_gen": "3",
+        "pcie_width": "16",
+        "power_w": "250.00"
+      },
+      {
+        "index": 2,
+        "name": "NVIDIA GeForce RTX 3090",
+        "vram_mib": "24576",
+        "bus": "00000000:88:00.0",
+        "pcie_gen": "3",
+        "pcie_width": "16",
+        "power_w": "250.00"
+      },
+      {
+        "index": 3,
+        "name": "NVIDIA GeForce RTX 3090",
+        "vram_mib": "24576",
+        "bus": "00000000:89:00.0",
+        "pcie_gen": "3",
+        "pcie_width": "16",
+        "power_w": "250.00"
+      },
+      {
+        "index": 4,
+        "name": "NVIDIA GeForce RTX 3090",
+        "vram_mib": "24576",
+        "bus": "00000000:B1:00.0",
+        "pcie_gen": "3",
+        "pcie_width": "16",
+        "power_w": "250.00"
+      }
+    ]
+  },
+  "nics": [
+    {
+      "name": "eno1np0",
+      "pci": "0000:61:00.0",
+      "model": "Intel Corporation Ethernet Connection X722 for 10GBASE-T (rev 09)",
+      "state": "up",
+      "speed_mbps": 1000
+    },
+    {
+      "name": "eno2np1",
+      "pci": "0000:61:00.1",
+      "model": "Intel Corporation Ethernet Connection X722 for 10GBASE-T (rev 09)",
+      "state": "up",
+      "speed_mbps": 10000
+    }
+  ],
+  "disks": [
+    {
+      "name": "sda",
+      "kind": "hdd",
+      "tran": "sata",
+      "model": "WDC WD10EJRX-89BDPY0",
+      "size_gb": 1000,
+      "mounts": [
+        "/data/hdd"
+      ]
+    },
+    {
+      "name": "sdb",
+      "kind": "hdd",
+      "tran": "sata",
+      "model": "WDC WD20SPZX-00UA7T0",
+      "size_gb": 2000,
+      "mounts": [
+        "/data/hdd1"
+      ]
+    },
+    {
+      "name": "sdc",
+      "kind": "ssd",
+      "tran": "sata",
+      "model": "SanDisk SSD PLUS 2000GB",
+      "size_gb": 2000,
+      "mounts": [
+        "/data/ssd4"
+      ]
+    },
+    {
+      "name": "sdd",
+      "kind": "ssd",
+      "tran": "sata",
+      "model": "Samsung SSD 870 QVO 2TB",
+      "size_gb": 2000,
+      "mounts": [
+        "/data/ssd3"
+      ]
+    },
+    {
+      "name": "sde",
+      "kind": "ssd",
+      "tran": "sata",
+      "model": "SanDisk SSD PLUS 2000GB",
+      "size_gb": 2000,
+      "mounts": [
+        "/data/ssd5"
+      ]
+    },
+    {
+      "name": "nvme2n1",
+      "kind": "nvme",
+      "tran": "nvme",
+      "model": "WD Blue SN570 1TB SSD",
+      "size_gb": 1000,
+      "mounts": [
+        "/data/ssd2"
+      ]
+    },
+    {
+      "name": "nvme0n1",
+      "kind": "nvme",
+      "tran": "nvme",
+      "model": "WD Blue SN570 1TB SSD",
+      "size_gb": 1000,
+      "mounts": [
+        "/data/ssd1"
+      ]
+    },
+    {
+      "name": "nvme1n1",
+      "kind": "nvme",
+      "tran": "nvme",
+      "model": "Samsung SSD 980 500GB",
+      "size_gb": 500,
+      "mounts": [
+        "/boot/efi",
+        "/"
+      ]
+    }
+  ],
+  "filesystems": [
+    {
+      "source": "/dev/nvme1n1p3",
+      "mount": "/",
+      "size_gb": 491,
+      "used_gb": 289
+    },
+    {
+      "source": "/dev/nvme0n1p1",
+      "mount": "/data/ssd1",
+      "size_gb": 984,
+      "used_gb": 812
+    },
+    {
+      "source": "/dev/nvme2n1p1",
+      "mount": "/data/ssd2",
+      "size_gb": 984,
+      "used_gb": 911
+    },
+    {
+      "source": "/dev/sda1",
+      "mount": "/data/hdd",
+      "size_gb": 984,
+      "used_gb": 361
+    },
+    {
+      "source": "/dev/sdd1",
+      "mount": "/data/ssd3",
+      "size_gb": 1968,
+      "used_gb": 1608
+    },
+    {
+      "source": "/dev/sde1",
+      "mount": "/data/ssd5",
+      "size_gb": 1968,
+      "used_gb": 1768
+    },
+    {
+      "source": "/dev/sdc1",
+      "mount": "/data/ssd4",
+      "size_gb": 1968,
+      "used_gb": 981
+    },
+    {
+      "source": "/dev/sdb",
+      "mount": "/data/hdd1",
+      "size_gb": 1969,
+      "used_gb": 1752
+    },
+    {
+      "source": "192.168.50.229:/home/nis",
+      "mount": "/home/nis",
+      "size_gb": 7620,
+      "used_gb": 3920
+    }
+  ],
+  "pci": {
+    "bmc": [
+      "ASPEED Technology, Inc. AST1150 PCI-to-PCI Bridge (rev 04)",
+      "ASPEED Technology, Inc. ASPEED Graphics Family (rev 41)"
+    ],
+    "physical_slots": 27,
+    "infiniband": [
+      "irdma0",
+      "irdma1"
+    ]
+  },
+  "software": {
+    "os": "22.04",
+    "kernel": "6.8.0-138-generic",
+    "docker": false,
+    "docker_group_size": 0,
+    "apptainer": false,
+    "ipmi_dev": true
+  }
+}

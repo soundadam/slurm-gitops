@@ -1,0 +1,140 @@
+{
+  "host": "g1",
+  "surveyed": "2026-09-28",
+  "dmi": {
+    "sys_vendor": "ASUS",
+    "product_name": "System Product Name",
+    "board_vendor": "ASUSTeK COMPUTER INC.",
+    "board_name": "PRIME B760-PLUS D4",
+    "chassis_type": "3",
+    "bios_version": "1604"
+  },
+  "cpu": {
+    "model": "13th Gen Intel(R) Core(TM) i7-13700F",
+    "sockets": 1,
+    "cores_per_socket": 16,
+    "threads": 24
+  },
+  "memory_gib": 31.2,
+  "gpu": {
+    "driver": "595.71.05",
+    "error": null,
+    "cards": [
+      {
+        "index": 0,
+        "name": "NVIDIA GeForce RTX 3080 Ti",
+        "vram_mib": "12288",
+        "bus": "00000000:01:00.0",
+        "pcie_gen": "4",
+        "pcie_width": "16",
+        "power_w": "250.00"
+      },
+      {
+        "index": 1,
+        "name": "NVIDIA GeForce RTX 3080 Ti",
+        "vram_mib": "12288",
+        "bus": "00000000:06:00.0",
+        "pcie_gen": "4",
+        "pcie_width": "16",
+        "power_w": "250.00"
+      }
+    ]
+  },
+  "nics": [
+    {
+      "name": "eno1",
+      "pci": "0000:05:00.0",
+      "model": "Realtek Semiconductor Co., Ltd. RTL8125 2.5GbE Controller (rev 05)",
+      "state": "up",
+      "speed_mbps": 1000
+    }
+  ],
+  "disks": [
+    {
+      "name": "sda",
+      "kind": "ssd",
+      "tran": "sata",
+      "model": "Great Wall GW560 2TB",
+      "size_gb": 2048,
+      "mounts": [
+        "/data/ssd1"
+      ]
+    },
+    {
+      "name": "sdb",
+      "kind": "ssd",
+      "tran": "sata",
+      "model": "SanDisk SSD PLUS 480GB",
+      "size_gb": 480,
+      "mounts": [
+        "/data/ssd0"
+      ]
+    },
+    {
+      "name": "sdc",
+      "kind": "hdd",
+      "tran": "sata",
+      "model": "TOSHIBA HDWD130",
+      "size_gb": 3001,
+      "mounts": [
+        "/data/hdd0"
+      ]
+    },
+    {
+      "name": "nvme0n1",
+      "kind": "nvme",
+      "tran": "nvme",
+      "model": "GIGABYTE GP-GSM2NE3256GNTD",
+      "size_gb": 256,
+      "mounts": [
+        "/boot/efi",
+        "/"
+      ]
+    }
+  ],
+  "filesystems": [
+    {
+      "source": "/dev/nvme0n1p2",
+      "mount": "/",
+      "size_gb": 250,
+      "used_gb": 35
+    },
+    {
+      "source": "/dev/sda1",
+      "mount": "/data/ssd1",
+      "size_gb": 2015,
+      "used_gb": 1748
+    },
+    {
+      "source": "/dev/sdb",
+      "mount": "/data/ssd0",
+      "size_gb": 472,
+      "used_gb": 313
+    },
+    {
+      "source": "/dev/sdc",
+      "mount": "/data/hdd0",
+      "size_gb": 2953,
+      "used_gb": 2226
+    },
+    {
+      "source": "192.168.50.229:/home/nis",
+      "mount": "/home/nis",
+      "size_gb": 7620,
+      "used_gb": 3920
+    }
+  ],
+  "pci": {
+    "bmc": [],
+    "physical_slots": 3,
+    "infiniband": []
+  },
+  "software": {
+    "os": "22.04",
+    "kernel": "6.8.0-136-generic",
+    "docker": false,
+    "docker_group_size": 0,
+    "apptainer": false,
+    "ipmi_dev": false
+  }
+}

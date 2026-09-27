@@ -1,7 +1,7 @@
 # 这个仓库是什么
 
-aalab GPU 集群的 Slurm 调度方案。集群是实验室共享的，节点上跑着别人的进程，
-用户账户来自实验室的 NIS——这些都不归本仓管，本仓只管 Slurm 那一层。
+aalab GPU 集群的设计：网络、存储、身份、控制节点与 Slurm 调度，以及它们的上线记录。
+集群是实验室共享的，节点上跑着别人的进程。
 
 **在 aalab 节点上动 root 之前先问用户。** 装包、改 PAM、重启守护进程都会影响别的成员，
 而 sudo 是用户以具体理由单独申请来的，一次批准不延续到下一件事。
@@ -10,8 +10,8 @@ aalab GPU 集群的 Slurm 调度方案。集群是实验室共享的，节点上
 **不在节点之间做内网探测。** 看不到的设备（NIS/NFS 服务器、网关）问用户或管理员，
 不从节点上往内网扫端口或多跳 SSH。
 
-`114.212.224.242` 是 NAT 出口，只有端口转发，不是能装服务的主机。
-控制器放在哪、为什么，在 [ADR-0001](../../docs/adr/0001-controller-inside-aalab-lan.md)。
+**设计还在讨论，不写 ADR。** 方案、倾向和待定问题都在 [design](../../docs/design.md)；
+结论没定之前不要把它固化成决定记录，也不要在别处把倾向写成定论。
 
-一个事实只写一处：节点硬件在 [inventory](../../docs/inventory.md)，QOS 与分区的数在
+一个事实只写一处：节点硬件在 `inventory/nodes/*.json`（[inventory.md](../../docs/inventory.md) 由它生成，不手改），QOS 与分区的数在
 [design](../../docs/design.md)，还没做的在 [rollout](../../docs/rollout.md)。

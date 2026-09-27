@@ -1,0 +1,134 @@
+{
+  "host": "g2",
+  "surveyed": "2026-09-28",
+  "dmi": {
+    "sys_vendor": "System manufacturer",
+    "product_name": "System Product Name",
+    "board_vendor": "ASUSTeK COMPUTER INC.",
+    "board_name": "ROG STRIX Z390-H GAMING",
+    "chassis_type": "3",
+    "bios_version": "2012"
+  },
+  "cpu": {
+    "model": "Intel(R) Core(TM) i7-8700K CPU @ 3.70GHz",
+    "sockets": 1,
+    "cores_per_socket": 6,
+    "threads": 12
+  },
+  "memory_gib": 31.3,
+  "gpu": {
+    "driver": "580.178.04",
+    "error": null,
+    "cards": [
+      {
+        "index": 0,
+        "name": "NVIDIA GeForce RTX 3080 Ti",
+        "vram_mib": "12288",
+        "bus": "00000000:01:00.0",
+        "pcie_gen": "3",
+        "pcie_width": "16",
+        "power_w": "250.00"
+      },
+      {
+        "index": 1,
+        "name": "NVIDIA GeForce RTX 3080 Ti",
+        "vram_mib": "12288",
+        "bus": "00000000:02:00.0",
+        "pcie_gen": "3",
+        "pcie_width": "16",
+        "power_w": "250.00"
+      }
+    ]
+  },
+  "nics": [
+    {
+      "name": "eno1",
+      "pci": "0000:00:1f.6",
+      "model": "Intel Corporation Ethernet Connection (7) I219-V (rev 10)",
+      "state": "up",
+      "speed_mbps": 1000
+    }
+  ],
+  "disks": [
+    {
+      "name": "sda",
+      "kind": "ssd",
+      "tran": "sata",
+      "model": "GLOWAY STK2TS3-S7",
+      "size_gb": 2000,
+      "mounts": [
+        "/data/ssd2"
+      ]
+    },
+    {
+      "name": "sdb",
+      "kind": "hdd",
+      "tran": "sata",
+      "model": "ST2000DM005-2CW102",
+      "size_gb": 2000,
+      "mounts": [
+        "/data/hdd0"
+      ]
+    },
+    {
+      "name": "nvme0n1",
+      "kind": "nvme",
+      "tran": "nvme",
+      "model": "INTEL SSDPEKKW256G8",
+      "size_gb": 256,
+      "mounts": [
+        "/boot/efi",
+        "/"
+      ]
+    },
+    {
+      "name": "nvme1n1",
+      "kind": "nvme",
+      "tran": "nvme",
+      "model": "WDS100T3X0C-00SJG0",
+      "size_gb": 1000,
+      "mounts": [
+        "/data/ssd1"
+      ]
+    }
+  ],
+  "filesystems": [
+    {
+      "source": "/dev/nvme1n1",
+      "mount": "/data/ssd1",
+      "size_gb": 984,
+      "used_gb": 916
+    },
+    {
+      "source": "/dev/sda1",
+      "mount": "/data/ssd2",
+      "size_gb": 1969,
+      "used_gb": 1861
+    },
+    {
+      "source": "/dev/sdb1",
+      "mount": "/data/hdd0",
+      "size_gb": 1969,
+      "used_gb": 1312
+    },
+    {
+      "source": "192.168.50.229:/home/nis",
+      "mount": "/home/nis",
+      "size_gb": 7620,
+      "used_gb": 3920
+    }
+  ],
+  "pci": {
+    "bmc": [],
+    "physical_slots": 2,
+    "infiniband": []
+  },
+  "software": {
+    "os": "22.04",
+    "kernel": "6.8.0-138-generic",
+    "docker": false,
+    "docker_group_size": 0,
+    "apptainer": false,
+    "ipmi_dev": false
+  }
+}

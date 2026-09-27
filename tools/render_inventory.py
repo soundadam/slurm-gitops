@@ -17,6 +17,26 @@ NIC_MAX = [
 ]
 
 
+# Series, recording method and grade of each HDD model, from the vendors' published model lists.
+# SMR drives stall for minutes under sustained writes and resilver very slowly, so they do not belong in a pool.
+HDD_CLASS = [
+    (r"WUH7224", "WD Ultrastar DC HC580", "CMR", "企业级"),
+    (r"WUH7218", "WD Ultrastar DC HC550", "CMR", "企业级"),
+    (r"WD\d+EFRX", "WD Red", "CMR", "NAS"),
+    (r"WD\d+EZAX|WD\d+EZAZ", "WD Blue", "SMR", "桌面"),
+    (r"WD\d+EZEX", "WD Blue", "CMR", "桌面"),
+    (r"WD\d+SPZX", "WD Blue 2.5 英寸", "SMR", "笔记本"),
+    (r"WD\d+EJRX|WD\d+PURZ", "WD Purple", "CMR", "监控"),
+    (r"WD\d+EUR[SX]", "WD AV-GP", "CMR", "监控"),
+    (r"HDWD1\d\d", "Toshiba P300", "CMR", "桌面"),
+    (r"ST\d+DM", "Seagate BarraCuda", "未确认", "桌面"),
+]
+
+
+def hdd_class(model):
+    return next((v for pat, *v in HDD_CLASS if re.search(pat, model)), ("?", "?", "?"))
+
+
 def nic_max(model):
     return next((v for pat, v in NIC_MAX if re.search(pat, model)), "?")
 
@@ -125,6 +145,19 @@ def main():
     w("\n网络文件系统：\n")
     for (src, mnt, u, s), ns in shared.items():
         w(f"- `{src}` 挂在 `{mnt}`，已用 {tb(u)} / {tb(s)}（{round(100 * u / s)}%），{len(ns)} 台节点挂载。")
+    w("")
+
+    w("### 机械盘\n")
+    w("系列、记录方式和级别按厂商公开的型号资料对照，没有读 SMART，通电时间和坏道要有 root 才能查。\n")
+    w("| 节点 | 盘 | 容量 | 型号 | 系列 | 记录方式 | 级别 | 挂在 | 已用 |")
+    w("| --- | --- | --- | --- | --- | --- | --- | --- | --- |")
+    hdds = [(n, k, d) for n, d in nodes.items() for k in d["disks"] if k["kind"] == "hdd"]
+    for n, k, d in sorted(hdds, key=lambda t: -t[1]["size_gb"]):
+        series, rec, grade = hdd_class(k["model"])
+        fs = [f for f in data_fs(d) if f["mount"] in k["mounts"]]
+        used = "、".join(f"{tb(f['used_gb'])} / {tb(f['size_gb'])}" for f in fs) or "—"
+        w(f"| {n} | {k['name']} | {tb(k['size_gb'])} | {k['model']} | {series} | {rec} | {grade} | "
+          f"{'、'.join(f'`{m}`' for m in k['mounts']) or '—'} | {used} |")
     w("")
 
     w("## 各节点的盘\n")

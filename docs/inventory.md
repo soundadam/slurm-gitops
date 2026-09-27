@@ -127,6 +127,27 @@ RDMA 设备：g8（irdma0, irdma1）、g9（irdma0, irdma1）。
 
 - `192.168.50.229:/home/nis` 挂在 `/home/nis`，已用 3.9T / 7.6T（51%），17 台节点挂载。
 
+### 机械盘
+
+系列、记录方式和级别按厂商公开的型号资料对照，没有读 SMART，通电时间和坏道要有 root 才能查。
+
+| 节点 | 盘 | 容量 | 型号 | 系列 | 记录方式 | 级别 | 挂在 | 已用 |
+| --- | --- | --- | --- | --- | --- | --- | --- | --- |
+| g18 | sda | 24.0T | WDC WUH722424ALE6L4 | WD Ultrastar DC HC580 | CMR | 企业级 | `/data/hdd0` | 22.5T / 23.9T |
+| g5 | sdb | 16.0T | WUH721816ALE6L4 | WD Ultrastar DC HC550 | CMR | 企业级 | `/data/hdd1` | 12.8T / 15.9T |
+| g19 | sdc | 16.0T | WUH721816ALE6L4 | WD Ultrastar DC HC550 | CMR | 企业级 | `/data/hdd0` | 5.3T / 15.9T |
+| g0 | sdc | 4.0T | WDC WD40EZAX-00C8UB0 | WD Blue | SMR | 桌面 | `/data/hdd1` | 3.5T / 4.0T |
+| g5 | sdc | 4.0T | WDC_WD42EJRX-89BFNY0 | WD Purple | CMR | 监控 | `/data/hdd2` | 3.1T / 3.9T |
+| g1 | sdc | 3.0T | TOSHIBA HDWD130 | Toshiba P300 | CMR | 桌面 | `/data/hdd0` | 2.2T / 3.0T |
+| g6 | sda | 3.0T | TOSHIBA HDWD130 | Toshiba P300 | CMR | 桌面 | `/data/hdd0` | 1.3T / 3.0T |
+| g0 | sdd | 2.0T | WDC WD20EFRX-68EUZN0 | WD Red | CMR | NAS | `/data/hdd0` | 1.5T / 1.9T |
+| g2 | sdb | 2.0T | ST2000DM005-2CW102 | Seagate BarraCuda | 未确认 | 桌面 | `/data/hdd0` | 1.3T / 2.0T |
+| g4 | sdb | 2.0T | WDC_WD20EURS-63S48Y0 | WD AV-GP | CMR | 监控 | `/data/hdd0` | 1.7T / 2.0T |
+| g7 | sda | 2.0T | WDC WD20EURX-64HYZY0 | WD AV-GP | CMR | 监控 | `/data/hdd0` | 688G / 2.0T |
+| g9 | sdb | 2.0T | WDC WD20SPZX-00UA7T0 | WD Blue 2.5 英寸 | SMR | 笔记本 | `/data/hdd1` | 1.8T / 2.0T |
+| g9 | sda | 1.0T | WDC WD10EJRX-89BDPY0 | WD Purple | CMR | 监控 | `/data/hdd` | 361G / 984G |
+| g17 | sda | 1.0T | WDC WD10EZEX-08WN4A1 | WD Blue | CMR | 桌面 | `/data/ssd0` | 761G / 983G |
+
 ## 各节点的盘
 
 | 节点 | 盘 | 大于 100G 的文件系统（已用 / 总量） |

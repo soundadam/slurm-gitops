@@ -1,12 +1,10 @@
 """Render docs/inventory.md from inventory/nodes/*.json (written by tools/survey.sh)."""
 
 import collections
-import glob
-import json
-import os
 import re
 
-ROOT = os.path.join(os.path.dirname(__file__), "..")
+from nodes import data_fs, load, tb
+
 EXPECTED = [f"g{i}" for i in range(20)]
 
 # Fastest speed each NIC model can negotiate; the link speed in the JSON is what the switch gave it.
@@ -25,18 +23,6 @@ def nic_max(model):
 
 def short_gpu(name):
     return name.replace("NVIDIA ", "").replace("GeForce ", "").replace(" Generation", "")
-
-
-def load():
-    nodes = {}
-    for f in glob.glob(os.path.join(ROOT, "inventory/nodes/*.json")):
-        d = json.load(open(f))
-        nodes[os.path.basename(f)[:-5]] = d
-    return dict(sorted(nodes.items(), key=lambda kv: int(kv[0][1:])))
-
-
-def tb(gb):
-    return f"{gb / 1000:.1f}T" if gb >= 1000 else f"{gb}G"
 
 
 def main():
@@ -70,10 +56,10 @@ def main():
     w(f"- CPU 线程合计 {sum(d['cpu']['threads'] for d in nodes.values())}，"
       f"内存合计 {round(sum(d['memory_gib'] for d in nodes.values()))} GiB。")
     w("- 本地盘裸容量：" + "、".join(f"{k.upper()} {tb(v)}" for k, v in disk_kind.most_common()) + "。")
-    data_fs = [f for d in nodes.values() for f in d["filesystems"] if f["mount"].startswith("/data")]
-    used, size = sum(f["used_gb"] for f in data_fs), sum(f["size_gb"] for f in data_fs)
+    local = [f for d in nodes.values() for f in data_fs(d)]
+    used, size = sum(f["used_gb"] for f in local), sum(f["size_gb"] for f in local)
     w(f"- 各节点 `/data*` 已用 {tb(used)} / {tb(size)}（{round(100 * used / size)}%），"
-      f"其中用量超过 85% 的有 {sum(1 for f in data_fs if f['used_gb'] > 0.85 * f['size_gb'])} / {len(data_fs)} 个。")
+      f"其中用量超过 85% 的有 {sum(1 for f in local if f['used_gb'] > 0.85 * f['size_gb'])} / {len(local)} 个。")
     speeds = collections.Counter(
         max((n["speed_mbps"] or 0) for n in d["nics"]) for d in nodes.values())
     w("- 每台节点最快的已连接网口：" + "、".join(
@@ -113,13 +99,41 @@ def main():
             w(f"| {n if i == 0 else ''} | {x['name']} | {model} | {x['state']} | {sp} | {nic_max(x['model'])} |")
     w("\nRDMA 设备：" + ("、".join(f"{n}（{', '.join(d['pci']['infiniband'])}）" for n, d in nodes.items() if d["pci"]["infiniband"]) or "无") + "。\n")
 
-    w("## 存储\n")
+    w("## 存储资源\n")
+    w("只算各节点本地的 `/data*` 与挂进来的网络文件系统；系统盘 `/` 上的用量在下一节逐台列出。\n")
+    fs_all = [(n, f) for n, d in nodes.items() for f in data_fs(d)]
+    w("| 介质 | 盘数 | 已用 / 总量 | 占比 |")
+    w("| --- | --- | --- | --- |")
+    for kind in ("nvme", "ssd", "hdd"):
+        fs = [f for _, f in fs_all if f["kind"] == kind]
+        u, s = sum(f["used_gb"] for f in fs), sum(f["size_gb"] for f in fs)
+        w(f"| {kind.upper()} | {len(fs)} | {tb(u)} / {tb(s)} | {round(100 * u / s)}% |")
+    u, s = sum(f["used_gb"] for _, f in fs_all), sum(f["size_gb"] for _, f in fs_all)
+    w(f"| 合计 | {len(fs_all)} | {tb(u)} / {tb(s)} | {round(100 * u / s)}% |\n")
+    w("各节点 `/data*` 按已用量从大到小：\n")
+    w("| 节点 | 已用 | 总量 | 剩余 | 占比 |")
+    w("| --- | --- | --- | --- | --- |")
+    per = sorted(((n, sum(f["used_gb"] for f in data_fs(d)), sum(f["size_gb"] for f in data_fs(d))) for n, d in nodes.items()),
+                 key=lambda t: -t[1])
+    for n, u, s in per:
+        w(f"| {n} | {tb(u)} | {tb(s)} | {tb(s - u)} | {round(100 * u / s)}% |")
+    shared = collections.defaultdict(list)
+    for n, d in nodes.items():
+        for f in d["filesystems"]:
+            if not f["source"].startswith("/dev/"):
+                shared[(f["source"], f["mount"], f["used_gb"], f["size_gb"])].append(n)
+    w("\n网络文件系统：\n")
+    for (src, mnt, u, s), ns in shared.items():
+        w(f"- `{src}` 挂在 `{mnt}`，已用 {tb(u)} / {tb(s)}（{round(100 * u / s)}%），{len(ns)} 台节点挂载。")
+    w("")
+
+    w("## 各节点的盘\n")
     w("| 节点 | 盘 | 大于 100G 的文件系统（已用 / 总量） |")
     w("| --- | --- | --- |")
     for n, d in nodes.items():
         disks = "<br>".join(f"{k['kind'].upper()} {tb(k['size_gb'])} {k['model']}" for k in sorted(d["disks"], key=lambda k: k["name"]))
         fs = "<br>".join(f"`{f['mount']}` {tb(f['used_gb'])} / {tb(f['size_gb'])}（{round(100 * f['used_gb'] / f['size_gb'])}%）"
-                         for f in d["filesystems"] if not f["source"].startswith("192.168."))
+                         for f in d["filesystems"] if f["source"].startswith("/dev/"))
         w(f"| {n} | {disks} | {fs} |")
 
     w("\n## 系统与软件\n")

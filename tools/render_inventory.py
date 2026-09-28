@@ -1,4 +1,4 @@
-"""Render docs/inventory.md from inventory/nodes/*.json (written by tools/survey.sh)."""
+"""Render docs/ref/inventory.md from inventory/nodes/*.json (written by tools/survey.sh)."""
 
 import collections
 import re

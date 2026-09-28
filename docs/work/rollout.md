@@ -39,7 +39,7 @@
 
 ## 数据冻结
 
-路线和每一步的理由见 [migration.md](migration.md)；需要[档 1](tiers.md) 的冷存储和网络到位。
+路线和每一步的理由见 [migration.md](migration.md)；需要[档 1](../ref/tiers.md) 的冷存储和网络到位。
 
 - [ ] 公告冻结日期、冻结范围和冷存储上的保留期限，开两周清理窗口
 - [ ] 冷存储建好 ZFS 池，每台节点一个 dataset，外加 home 一个

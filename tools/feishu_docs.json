@@ -3,25 +3,25 @@
   "base_url": "https://soundadam.feishu.cn",
   "dirs": {},
   "files": {
-    "docs/freeze-estimate.md": {
+    "docs/ref/freeze-estimate.md": {
       "file_token": "ZDeLbunNQo3K5UxnBZ5cHKRenWd",
       "node_token": "S9RSw2NS6i3PX1kFCFxcIVYdnRb",
       "sha256": "825e555942d799d3ac0ac8acaa3e1dbeda8beea5f836f34878a2fe4fc0c71548",
       "version": "7690447166690610156"
     },
-    "docs/inventory.md": {
+    "docs/ref/inventory.md": {
       "file_token": "Erv8bbhEWoR7W5xma1Jcbd8TnLf",
       "node_token": "FLmzwuItVisEAFk1oOHcG89Bneg",
       "sha256": "f78cef2c61979797b62c2e3c7cc4e4692b51fd35767fae8c7d4fcc2d79a6a7c2",
       "version": "7690440474124897480"
     },
-    "docs/storage-node.md": {
+    "docs/ref/storage-node.md": {
       "file_token": "LEvpbSC1YofkOBxHilWcwFd7nSc",
       "node_token": "V2bwwLJkviesWrkFQZYcdB40n3g",
       "sha256": "2d085af86536acc34e7136f81ceef380adf5062a59ae58a8989fdfe8c443d4ad",
       "version": "7690447171010710459"
     },
-    "docs/tiers.md": {
+    "docs/ref/tiers.md": {
       "file_token": "Z0Ptb5s4CoApUhxmpsRcrTXwnef",
       "node_token": "O1DWwgEfZixTtKksr8mcgsI5nJc",
       "sha256": "79153fb2b26f5693e9d6a1548569ef68572790e1d57ebfd471919feabcfb2661",

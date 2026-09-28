@@ -1,6 +1,6 @@
 """Estimate how long a full copy of every node's /data* onto one cold-storage box takes.
 
-Prints docs/freeze-estimate.md. Every node copies all its disks at once; each disk reads at its
+Prints docs/ref/freeze-estimate.md. Every node copies all its disks at once; each disk reads at its
 media rate, each node is capped by its link, and the cold box is capped by its own ingress.
 Bandwidth is shared max-min fairly, so the slowest node sets the total time.
 """
@@ -12,7 +12,7 @@ from nodes import data_fs, load, tb
 DISK_READ = {"hdd": 180, "ssd": 450, "nvme": 1500, "?": 180}
 LINK = {1: 112, 2.5: 280, 10: 1100, 25: 2750}
 # Pool write rates with many rsync streams at once: 16 new HDDs as two 8-wide raidz2 vdevs, or the
-# reuse start in docs/storage-node.md, one 6-wide raidz2 (four data disks).
+# reuse start in docs/ref/storage-node.md, one 6-wide raidz2 (four data disks).
 POOL_WRITE_16 = 1200
 POOL_WRITE_6 = 700
 

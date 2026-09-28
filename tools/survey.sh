@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
-# Survey every aalab node over SSH into inventory/nodes/<node>.json, then render docs/inventory.md
-# and docs/freeze-estimate.md.
+# Survey every aalab node over SSH into inventory/nodes/<node>.json, then render docs/ref/inventory.md
+# and docs/ref/freeze-estimate.md.
 # Unreachable nodes keep their previous JSON (if any) and are listed at the end.
 set -uo pipefail
 cd "$(dirname "$0")/.."
@@ -20,5 +20,5 @@ for n in $(seq 0 19); do
 done
 wait
 [ -f inventory/.unreachable ] && { echo "unreachable: $(sort -V inventory/.unreachable | paste -sd' ')"; rm inventory/.unreachable; }
-python3 tools/render_inventory.py > docs/inventory.md
-python3 tools/freeze_estimate.py > docs/freeze-estimate.md
+python3 tools/render_inventory.py > docs/ref/inventory.md
+python3 tools/freeze_estimate.py > docs/ref/freeze-estimate.md

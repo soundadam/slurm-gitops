@@ -1,12 +1,21 @@
 #!/usr/bin/env python3
-"""Mirror the settled part of docs/ into a Feishu wiki space as native Markdown.
+"""Mirror docs/ref/ into a Feishu wiki space as native Markdown.
 
 The repo is where a fact lives (.claude/rules/scope.md: one fact, one place);
-Feishu is where colleagues read it and argue about the purchase. A second copy
-in Feishu is only safe if nobody edits it there. So the mirror is one-way and
-machine-written, and it is tracked in both directions: every page carries a
-header naming the commit it came from, and `check` fetches each page back and
-reports any page whose content is not what was last pushed.
+Feishu is where colleagues read it and argue about the purchase. docs/ref/ is
+the part written for them, and it has to read on its own: a link from it to
+anything outside docs/ref/ opens nothing in Feishu, so every command refuses
+to run while one exists.
+
+A second copy in Feishu is only safe if nobody edits it there. So the mirror
+is one-way and machine-written, and it is tracked in both directions: every
+page carries a header naming the commit it came from, and `check` fetches each
+page back and reports any page whose content is not what was last pushed.
+
+docs/ref/README.md is not a page of its own: it is written into the docx the
+wiki root node already is, so the space opens on it. A docx fetched back comes
+out re-serialised, not byte for byte, so `check` watches its revision id
+instead of its content.
 
 Native .md is the only shape that survives a periodic push. `markdown
 +overwrite` keeps the file token, so the wiki node and its URL stay put and
@@ -15,9 +24,9 @@ Feishu keeps one version per push. Importing as docx renders nicer but
 mint a new document at a new URL and orphan whatever comments were on the old
 one.
 
-    tools/feishu_docs.py init --under <wiki page URL>   once
+    tools/feishu_docs.py init --space-id <id> --base-url <url>   once
     tools/feishu_docs.py push                           after docs change
-    tools/feishu_docs.py status                         what push would do
+    tools/feishu_docs.py status                         what push would do, no network
     tools/feishu_docs.py check                          did anyone edit in Feishu
 
 State lives in tools/feishu_docs.json: repo path -> file token and the hash
@@ -54,18 +63,8 @@ from urllib.parse import urlsplit
 
 REPO = Path(__file__).resolve().parent.parent
 STATE_PATH = REPO / "tools" / "feishu_docs.json"
-DOC_ROOT = "docs"
-
-# What colleagues read while arguing about the purchase: measured facts and
-# the priced options, each settled enough to quote. design, migration and
-# rollout stay in the repo -- they are leanings still under discussion and our
-# own checklist, and a leaning read in Feishu gets quoted as a decision.
-MIRRORED = (
-    "docs/inventory.md",
-    "docs/freeze-estimate.md",
-    "docs/tiers.md",
-    "docs/storage-node.md",
-)
+DOC_ROOT = "docs/ref"
+INDEX = f"{DOC_ROOT}/README.md"
 
 # Inline links only, and not images: [text](target). Anchors are split off
 # below -- a .md preview in Feishu has no heading anchors to jump to.
@@ -136,12 +135,39 @@ def save_state(state: dict) -> None:
 
 
 def tracked_docs() -> list[str]:
-    """Tracked files in MIRRORED; a scratch .md in docs/ is not part of it."""
-    listed = set(git(["ls-files", DOC_ROOT]).splitlines())
-    missing = [p for p in MIRRORED if p not in listed]
-    if missing:
-        sys.exit(f"MIRRORED names docs that are not tracked: {missing}")
-    return sorted(MIRRORED)
+    """Tracked pages under DOC_ROOT, the index excluded; scratch files are not."""
+    listed = git(["ls-files", DOC_ROOT]).splitlines()
+    return sorted(p for p in listed if p.endswith(".md") and p != INDEX)
+
+
+def link_targets(text: str) -> list[str]:
+    refs = {m.group(1).lower(): m.group(2) for m in REF_DEF_RE.finditer(text)}
+    inline = [m.group(2) for m in LINK_RE.finditer(text)]
+    used = [refs[m.group(2).lower()] for m in REF_USE_RE.finditer(text)
+            if m.group(2).lower() in refs]
+    return inline + used
+
+
+def require_closed() -> None:
+    """Refuse to go on while a doc in DOC_ROOT links anywhere outside it.
+
+    docs/work/ may cite docs/ref/, never the other way: a reader in Feishu
+    cannot open a repo path, and a sentence that leans on one does not read.
+    """
+    bad = []
+    for rel in [INDEX, *tracked_docs()]:
+        for target in link_targets((REPO / rel).read_text(encoding="utf-8")):
+            path = target.partition("#")[0]
+            if SCHEME_RE.match(target) or not path:
+                continue
+            resolved = posixpath.normpath(posixpath.join(posixpath.dirname(rel), path))
+            if not resolved.startswith(DOC_ROOT + "/") or not (REPO / resolved).is_file():
+                bad.append(f"  {rel}: ({target})")
+    if bad:
+        sys.exit(
+            f"{DOC_ROOT}/ 里的文档只能链到 {DOC_ROOT}/ 里的文档，"
+            "飞书上的读者打不开别的路径：\n" + "\n".join(bad)
+        )
 
 
 def stamp(rel: str) -> str:
@@ -168,33 +194,25 @@ def stamp(rel: str) -> str:
 
 
 def resolve(label: str, target: str, src_dir: str, urls: dict[str, str]) -> str:
-    """One link's replacement: a wiki URL if we mirror it, plain text if not."""
+    """One link's replacement: the wiki URL of the page it names.
+
+    require_closed has already refused anything outside DOC_ROOT, so the only
+    miss left is a page not created yet (status, dry-run), which keeps its label.
+    """
     if SCHEME_RE.match(target) or target.startswith("#"):
         return f"[{label}]({target})"
     path, _, _anchor = target.partition("#")
     if not path:
         return f"[{label}]({target})"
-    resolved = posixpath.normpath(posixpath.join(src_dir, path))
-    url = urls.get(resolved)
-    if url:
-        return f"[{label}]({url})"
-    if resolved.startswith(DOC_ROOT + "/"):
-        return label  # a doc we keep out of Feishu; its repo path opens nothing there
-    bare = label.strip("`").rstrip("/")
-    if bare == resolved or bare == path.rstrip("/"):
-        return f"`{resolved}`"  # the label already was the path
-    where = "仓库外" if resolved.startswith("..") else "仓库"
-    return f"{label}（{where} `{resolved}`）"
+    url = urls.get(posixpath.normpath(posixpath.join(src_dir, path)))
+    return f"[{label}]({url})" if url else label
 
 
 def rewrite_links(text: str, rel: str, urls: dict[str, str]) -> str:
-    """Point cross-doc links at wiki nodes; defuse the ones we do not mirror.
+    """Point cross-doc links at wiki nodes, reference-style ones included.
 
-    A relative path means nothing in Feishu. Leaving it would produce a link
-    that looks live and is not, which is worse than plain text, so anything
-    outside the mirror degrades to plain text: a doc we keep out of Feishu to
-    its label, anything else to the path in backticks. Reference-style
-    links get the same treatment, definition lines included.
+    A relative path means nothing in Feishu, and a .md preview there has no
+    heading anchors to jump to, so a link keeps its page and loses its anchor.
     """
     src_dir = posixpath.dirname(rel)
     refs = {m.group(1).lower(): m.group(2) for m in REF_DEF_RE.finditer(text)}
@@ -223,11 +241,44 @@ def digest(text: str) -> str:
 
 def url_map(state: dict) -> dict[str, str]:
     base = state["base_url"].rstrip("/")
-    return {
+    urls = {
         rel: f"{base}/wiki/{entry['node_token']}"
         for rel, entry in state["files"].items()
         if entry.get("node_token")
     }
+    urls[INDEX] = f"{base}/wiki/{state['root_node_token']}"
+    return urls
+
+
+def index_doc(state: dict, identity: str) -> str:
+    """The docx token behind the root node, looked up once and kept."""
+    index = state.setdefault("index", {})
+    if not index.get("doc_token"):
+        node = run_cli(["wiki", "+node-get", "--node-token", state["root_node_token"]], identity)
+        index["doc_token"] = node["obj_token"]
+    return index["doc_token"]
+
+
+def push_index(state: dict, urls: dict[str, str], identity: str, args) -> bool:
+    index = state.setdefault("index", {})
+    content = render(INDEX, urls)
+    sha = digest(content)
+    if sha == index.get("sha256") and not args.force:
+        return False
+    if args.dry_run:
+        print(f"  ~ 会覆盖首页 {INDEX}")
+        return True
+    data = run_cli(
+        ["docs", "+update", "--doc", index_doc(state, identity),
+         "--command", "overwrite", "--doc-format", "markdown", "--content", "-"],
+        identity,
+        stdin=content,
+    )
+    index["sha256"] = sha
+    index["revision_id"] = data.get("document", data).get("revision_id")
+    save_state(state)
+    print(f"  ~ {INDEX}  ->  {urls[INDEX]}")
+    return True
 
 
 def ensure_dir_node(state: dict, reldir: str, identity: str) -> str:
@@ -355,6 +406,7 @@ def cmd_init(args: argparse.Namespace) -> None:
 
 
 def cmd_push(args: argparse.Namespace) -> None:
+    require_closed()
     state = load_state()
     identity = args.identity or state.get("as", "bot")
     docs = select(tracked_docs(), args.only)
@@ -394,11 +446,17 @@ def cmd_push(args: argparse.Namespace) -> None:
         print(f"  ~ {rel}  ->  {urls.get(rel, entry['file_token'])}")
         pushed += 1
 
+    if not args.only:
+        if push_index(state, urls, identity, args):
+            pushed += 1
+        else:
+            skipped += 1
     print(f"\n推了 {pushed} 篇，跳过 {skipped} 篇未变的。")
     report_orphans(state, tracked_docs())
 
 
 def cmd_status(args: argparse.Namespace) -> None:
+    require_closed()
     state = load_state()
     docs = select(tracked_docs(), args.only)
     urls = url_map(state)
@@ -411,6 +469,10 @@ def cmd_status(args: argparse.Namespace) -> None:
             print(f"  ~ {rel}  待推送")
         else:
             print(f"  = {rel}")
+    if not args.only:
+        index = state.get("index", {})
+        mark = "=" if digest(render(INDEX, urls)) == index.get("sha256") else "~"
+        print(f"  {mark} {INDEX}  首页")
     report_orphans(state, tracked_docs())
 
 
@@ -424,11 +486,30 @@ def cmd_check(args: argparse.Namespace) -> None:
     rewrite the page. The diff is printed first, so anything worth keeping
     can be moved back into the repo before that happens.
     """
+    require_closed()
     state = load_state()
     identity = args.identity or state.get("as", "bot")
     docs = select(tracked_docs(), args.only)
     urls = url_map(state)
     drifted = 0
+    index = state.get("index", {})
+    if not args.only and index.get("revision_id") is not None:
+        doc = run_cli(
+            ["docs", "+fetch", "--doc", index_doc(state, identity),
+             "--scope", "outline", "--max-depth", "1"],
+            identity,
+        )["document"]
+        if doc["revision_id"] == index["revision_id"]:
+            print(f"  = {INDEX}  首页")
+        else:
+            drifted += 1
+            if not args.keep:
+                index["sha256"] = ""
+                save_state(state)
+            print(
+                f"  ! {INDEX}  首页在飞书上被改过（版本 {index['revision_id']} → "
+                f"{doc['revision_id']}），docx 取回来不是原文，没法逐行比，去飞书的版本历史看"
+            )
     for rel in docs:
         entry = state["files"].get(rel)
         if entry is None:

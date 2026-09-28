@@ -6,27 +6,32 @@
     "docs/ref/freeze-estimate.md": {
       "file_token": "ZDeLbunNQo3K5UxnBZ5cHKRenWd",
       "node_token": "S9RSw2NS6i3PX1kFCFxcIVYdnRb",
-      "sha256": "825e555942d799d3ac0ac8acaa3e1dbeda8beea5f836f34878a2fe4fc0c71548",
-      "version": "7690447166690610156"
+      "sha256": "a7b2d6865f06817e53897e6056124c8a3e88283fd4fb8ae4f24a29afc189b682",
+      "version": "7690453733808802788"
     },
     "docs/ref/inventory.md": {
       "file_token": "Erv8bbhEWoR7W5xma1Jcbd8TnLf",
       "node_token": "FLmzwuItVisEAFk1oOHcG89Bneg",
-      "sha256": "f78cef2c61979797b62c2e3c7cc4e4692b51fd35767fae8c7d4fcc2d79a6a7c2",
-      "version": "7690440474124897480"
+      "sha256": "1115c391f27c6ce374d2331ad57591a4485ea7883bc33857e47d36e1f3cb7252",
+      "version": "7690453738879781863"
     },
     "docs/ref/storage-node.md": {
       "file_token": "LEvpbSC1YofkOBxHilWcwFd7nSc",
       "node_token": "V2bwwLJkviesWrkFQZYcdB40n3g",
-      "sha256": "2d085af86536acc34e7136f81ceef380adf5062a59ae58a8989fdfe8c443d4ad",
-      "version": "7690447171010710459"
+      "sha256": "ff1d0556543cfaa07ab466278feff47075f35c49bf5bb14659420845a901dfbe",
+      "version": "7690453743438924754"
     },
     "docs/ref/tiers.md": {
       "file_token": "Z0Ptb5s4CoApUhxmpsRcrTXwnef",
       "node_token": "O1DWwgEfZixTtKksr8mcgsI5nJc",
-      "sha256": "79153fb2b26f5693e9d6a1548569ef68572790e1d57ebfd471919feabcfb2661",
-      "version": "7690447175515442163"
+      "sha256": "3557a967d453bbbe893c9e0226a9762bb39c17c71dd178ba718e93833dfa6d8e",
+      "version": "7690453748417563600"
     }
+  },
+  "index": {
+    "doc_token": "MOixdkzeNouaGzxslAYc6fzrnHd",
+    "revision_id": 3,
+    "sha256": "379acf7899ef999e5fa3683f3938a46c7ccb61858cebde27798aa76e0394c338"
   },
   "root_node_token": "JAabwL0oXiGkR3kxRLccjd6Gnud",
   "space_id": "7690440253496150992"

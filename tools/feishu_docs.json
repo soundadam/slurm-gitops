@@ -6,8 +6,8 @@
     "docs/freeze-estimate.md": {
       "file_token": "ZDeLbunNQo3K5UxnBZ5cHKRenWd",
       "node_token": "S9RSw2NS6i3PX1kFCFxcIVYdnRb",
-      "sha256": "c5ed26c05c5c91ae633ef9e4a3acfcb693325384e6445315b31417788b0bebc7",
-      "version": "7690440470043823390"
+      "sha256": "825e555942d799d3ac0ac8acaa3e1dbeda8beea5f836f34878a2fe4fc0c71548",
+      "version": "7690447166690610156"
     },
     "docs/inventory.md": {
       "file_token": "Erv8bbhEWoR7W5xma1Jcbd8TnLf",
@@ -18,14 +18,14 @@
     "docs/storage-node.md": {
       "file_token": "LEvpbSC1YofkOBxHilWcwFd7nSc",
       "node_token": "V2bwwLJkviesWrkFQZYcdB40n3g",
-      "sha256": "6be0a16f6c8a3cf430ff94dc74bacd6e859131772560e7b81ac1215e902a2b4d",
-      "version": "7690440478197550339"
+      "sha256": "2d085af86536acc34e7136f81ceef380adf5062a59ae58a8989fdfe8c443d4ad",
+      "version": "7690447171010710459"
     },
     "docs/tiers.md": {
       "file_token": "Z0Ptb5s4CoApUhxmpsRcrTXwnef",
       "node_token": "O1DWwgEfZixTtKksr8mcgsI5nJc",
-      "sha256": "ff6fbc772371166b41f4e90434bd9dc75bb23987d9e850fe9d7c0db21484c7bc",
-      "version": "7690440482253475049"
+      "sha256": "79153fb2b26f5693e9d6a1548569ef68572790e1d57ebfd471919feabcfb2661",
+      "version": "7690447175515442163"
     }
   },
   "root_node_token": "JAabwL0oXiGkR3kxRLccjd6Gnud",

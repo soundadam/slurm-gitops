@@ -12,25 +12,28 @@ from nodes import data_fs, load, tb
 DISK_READ = {"hdd": 180, "ssd": 450, "nvme": 1500, "?": 180}
 LINK = {1: 112, 2.5: 280, 10: 1100, 25: 2750}
 # Pool write rates with many rsync streams at once: 16 new HDDs as two 8-wide raidz2 vdevs, or the
-# reuse start in docs/ref/storage-node.md, one 6-wide raidz2 (four data disks).
+# reuse start in docs/ref/cold-storage.md, one 6-wide raidz2 (four data disks).
 POOL_WRITE_16 = 1200
 POOL_WRITE_6 = 700
+# docs/ref/plan.md gives g18 and g19 25G, g8 and g9 their 10GBASE-T ports, and every desktop 2.5G.
+BIG_NODES = {"g18", "g19"}
+
 
 def link_now(d):
     return max((x["speed_mbps"] or 0) for x in d["nics"]) / 1000
 
 
-def link_tier1(n, d):
-    """Tier 1 network: every desktop at 2.5G (1G-only boards get a PCIe card), servers at 10G."""
+def link_planned(n, d):
+    if n in BIG_NODES:
+        return 25
     return 10 if d["pci"]["bmc"] else 2.5
 
 
 SCENARIOS = [
     ("现网", "冷存储接在现有交换机的 1G 口上，节点不动", lambda n, d: link_now(d), LINK[1]),
-    ("冷存储 10G", "冷存储有一个 10G 口，节点的连接不动", lambda n, d: link_now(d), LINK[10]),
-    ("档 1 网络，16 盘", "台式机全部 2.5G（只有千兆口的加一块 2.5G 卡），四台服务器 10G，冷存储 25G，16 块新盘", link_tier1,
-     min(LINK[25], POOL_WRITE_16)),
-    ("档 1 网络，利旧起步", "网络同上，冷存储起步只有 6 块新盘", link_tier1, min(LINK[25], POOL_WRITE_6)),
+    ("新网络，利旧起步", "g18、g19 25G，g8、g9 10G，台式机 2.5G，冷存储 25G；冷存储起步 6 块新盘", link_planned,
+     min(LINK[25], POOL_WRITE_6)),
+    ("新网络，全新 16 盘", "网络同上，冷存储 16 块新盘", link_planned, min(LINK[25], POOL_WRITE_16)),
 ]
 
 
@@ -100,7 +103,7 @@ def main():
       f"把 {len(nodes)} 台节点的 `/data*`（共 {tb(total)}）同时复制到一台冷存储上，"
       "每块盘按介质的顺序读速度读、每台节点受自己的网口限制、冷存储受它的入口限制。"
       "按大文件估算，小文件多的目录会慢好几倍，所以这是下限。第二遍增量同步只传差异，不在这里估算。"
-      "这里只算时间，不管装不装得下：利旧起步的池子装不下全部数据，要分批冻结，见 storage-node「池怎么排」。\n")
+      "这里只算时间，不管装不装得下：利旧起步的池子装不下全部数据，要分批冻结，见 cold-storage「池怎么排」。\n")
     w("「同时开跑」是所有盘一起开始、带宽平分；「最快」是先排最慢的那块盘和那条链路，没有哪种排法能比它快。\n")
     w("| 场景 | 条件 | 同时开跑 | 最快 |")
     w("| --- | --- | --- | --- |")

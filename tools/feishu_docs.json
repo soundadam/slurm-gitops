@@ -3,17 +3,59 @@
   "base_url": "https://soundadam.feishu.cn",
   "dirs": {},
   "files": {
+    "docs/ref/cold-storage.md": {
+      "file_token": "YdQzb65Adomb5PxFhIdc93mzngd",
+      "node_token": "GotawX3PiiRTW9kBYZacQKj2nIG",
+      "sha256": "3b313a4da807e172ce3637a87c1652432e04c3c8b1bac273bce3cf43836e7135",
+      "version": "7690515152446852057"
+    },
+    "docs/ref/control-and-identity.md": {
+      "file_token": "LETIbHRWZo309Ix9xKfcr70Zndh",
+      "node_token": "E8Oowbm0qiEvmikzw5XcAbUPnhe",
+      "sha256": "0c4fadaccd70d59c29d44d88b4e5e49c1d6f96b107ed57550e282ad9a00eb692",
+      "version": "7690515157218266078"
+    },
+    "docs/ref/current.md": {
+      "file_token": "Ev0DbJ8sDoK0agxfJQIck44Jnfc",
+      "node_token": "ZKAbwiDqOiIQWuk0kCdcif3lnhd",
+      "sha256": "7c71a4297de9cf34d28912bd61daf64097e58682fdb2369f09da57fb0293d92d",
+      "version": "7690515161815370697"
+    },
     "docs/ref/freeze-estimate.md": {
       "file_token": "ZDeLbunNQo3K5UxnBZ5cHKRenWd",
       "node_token": "S9RSw2NS6i3PX1kFCFxcIVYdnRb",
-      "sha256": "a7b2d6865f06817e53897e6056124c8a3e88283fd4fb8ae4f24a29afc189b682",
-      "version": "7690453733808802788"
+      "sha256": "3238fa443ab0b58156141712fae00ce56533808cc55b88549384fe2382a5445e",
+      "version": "7690515166609378244"
+    },
+    "docs/ref/hot-storage.md": {
+      "file_token": "FlwBb1AVjoGdLSxTn1bcnpognSb",
+      "node_token": "XqoTwKKMRizo32k6r9CcttxCnMf",
+      "sha256": "d18f44d1cb6e6679899262e9fc0b4771d028fadbcb4d0eb061c67ffc89beac74",
+      "version": "7690515174582701031"
     },
     "docs/ref/inventory.md": {
       "file_token": "Erv8bbhEWoR7W5xma1Jcbd8TnLf",
       "node_token": "FLmzwuItVisEAFk1oOHcG89Bneg",
-      "sha256": "1115c391f27c6ce374d2331ad57591a4485ea7883bc33857e47d36e1f3cb7252",
-      "version": "7690453738879781863"
+      "sha256": "dba83e89ddb501ad9e3e558335406c7c0bc595e1937cb782cda5fa78a5fee03b",
+      "version": "7690515179603332064"
+    },
+    "docs/ref/plan.md": {
+      "file_token": "KZXDbTrIzo0edcxoir9c1xDPnn9",
+      "node_token": "F7vvwa2gTiDYhzkQbFQczMe2nah",
+      "sha256": "eec9ab4670873dd0e8b3c45ed1e13a076b2efa23adf2a7de6e769618ad7cd709",
+      "version": "7690515184498085074"
+    },
+    "docs/ref/purchase.md": {
+      "file_token": "WQR9bHnZPoc4ztxRqNOctzYNnrh",
+      "node_token": "UNtgwLR1YilGuIkTDhYcOuC6nVh",
+      "sha256": "4c3895dcdfc48995c443dd6a47ff54618ae1d683f995ba8382b642e50498194d",
+      "version": "7690515189300595908"
+    },
+    "docs/ref/software.md": {
+      "file_token": "Z73rbdMXFo1J07xYO6ecooM1nUd",
+      "node_token": "Av0fwqosVi6DLgk6NjEckNQgntb",
+      "sha256": "d4dd104946ed9e7af1f01ae84222bc44082d3e1005235161f6108e157ede2d6b",
+      "version": "7690515193591336161"
     },
     "docs/ref/storage-node.md": {
       "file_token": "LEvpbSC1YofkOBxHilWcwFd7nSc",
@@ -30,8 +72,8 @@
   },
   "index": {
     "doc_token": "MOixdkzeNouaGzxslAYc6fzrnHd",
-    "revision_id": 3,
-    "sha256": "379acf7899ef999e5fa3683f3938a46c7ccb61858cebde27798aa76e0394c338"
+    "revision_id": 5,
+    "sha256": "ebb03fd93515226eda2de3c348b97eae32c0fe4414db7569b98aa559a37f17f3"
   },
   "root_node_token": "JAabwL0oXiGkR3kxRLccjd6Gnud",
   "space_id": "7690440253496150992"

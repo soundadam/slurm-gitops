@@ -1,0 +1,33 @@
+{
+  "as": "user",
+  "base_url": "https://soundadam.feishu.cn",
+  "dirs": {},
+  "files": {
+    "docs/freeze-estimate.md": {
+      "file_token": "ZDeLbunNQo3K5UxnBZ5cHKRenWd",
+      "node_token": "S9RSw2NS6i3PX1kFCFxcIVYdnRb",
+      "sha256": "c5ed26c05c5c91ae633ef9e4a3acfcb693325384e6445315b31417788b0bebc7",
+      "version": "7690440470043823390"
+    },
+    "docs/inventory.md": {
+      "file_token": "Erv8bbhEWoR7W5xma1Jcbd8TnLf",
+      "node_token": "FLmzwuItVisEAFk1oOHcG89Bneg",
+      "sha256": "f78cef2c61979797b62c2e3c7cc4e4692b51fd35767fae8c7d4fcc2d79a6a7c2",
+      "version": "7690440474124897480"
+    },
+    "docs/storage-node.md": {
+      "file_token": "LEvpbSC1YofkOBxHilWcwFd7nSc",
+      "node_token": "V2bwwLJkviesWrkFQZYcdB40n3g",
+      "sha256": "6be0a16f6c8a3cf430ff94dc74bacd6e859131772560e7b81ac1215e902a2b4d",
+      "version": "7690440478197550339"
+    },
+    "docs/tiers.md": {
+      "file_token": "Z0Ptb5s4CoApUhxmpsRcrTXwnef",
+      "node_token": "O1DWwgEfZixTtKksr8mcgsI5nJc",
+      "sha256": "ff6fbc772371166b41f4e90434bd9dc75bb23987d9e850fe9d7c0db21484c7bc",
+      "version": "7690440482253475049"
+    }
+  },
+  "root_node_token": "JAabwL0oXiGkR3kxRLccjd6Gnud",
+  "space_id": "7690440253496150992"
+}

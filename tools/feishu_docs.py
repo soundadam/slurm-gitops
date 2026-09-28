@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Mirror docs/ into a Feishu wiki space as native Markdown files.
+"""Mirror the settled part of docs/ into a Feishu wiki space as native Markdown.
 
 The repo is where a fact lives (.claude/rules/scope.md: one fact, one place);
 Feishu is where colleagues read it and argue about the purchase. A second copy
@@ -55,6 +55,17 @@ from urllib.parse import urlsplit
 REPO = Path(__file__).resolve().parent.parent
 STATE_PATH = REPO / "tools" / "feishu_docs.json"
 DOC_ROOT = "docs"
+
+# What colleagues read while arguing about the purchase: measured facts and
+# the priced options, each settled enough to quote. design, migration and
+# rollout stay in the repo -- they are leanings still under discussion and our
+# own checklist, and a leaning read in Feishu gets quoted as a decision.
+MIRRORED = (
+    "docs/inventory.md",
+    "docs/freeze-estimate.md",
+    "docs/tiers.md",
+    "docs/storage-node.md",
+)
 
 # Inline links only, and not images: [text](target). Anchors are split off
 # below -- a .md preview in Feishu has no heading anchors to jump to.
@@ -125,9 +136,12 @@ def save_state(state: dict) -> None:
 
 
 def tracked_docs() -> list[str]:
-    """Only tracked files: a scratch .md in docs/ is not part of the mirror."""
-    listed = git(["ls-files", DOC_ROOT]).splitlines()
-    return sorted(p for p in listed if p.endswith(".md"))
+    """Tracked files in MIRRORED; a scratch .md in docs/ is not part of it."""
+    listed = set(git(["ls-files", DOC_ROOT]).splitlines())
+    missing = [p for p in MIRRORED if p not in listed]
+    if missing:
+        sys.exit(f"MIRRORED names docs that are not tracked: {missing}")
+    return sorted(MIRRORED)
 
 
 def stamp(rel: str) -> str:
@@ -164,6 +178,8 @@ def resolve(label: str, target: str, src_dir: str, urls: dict[str, str]) -> str:
     url = urls.get(resolved)
     if url:
         return f"[{label}]({url})"
+    if resolved.startswith(DOC_ROOT + "/"):
+        return label  # a doc we keep out of Feishu; its repo path opens nothing there
     bare = label.strip("`").rstrip("/")
     if bare == resolved or bare == path.rstrip("/"):
         return f"`{resolved}`"  # the label already was the path
@@ -176,7 +192,8 @@ def rewrite_links(text: str, rel: str, urls: dict[str, str]) -> str:
 
     A relative path means nothing in Feishu. Leaving it would produce a link
     that looks live and is not, which is worse than plain text, so anything
-    outside the mirror degrades to the path in backticks. Reference-style
+    outside the mirror degrades to plain text: a doc we keep out of Feishu to
+    its label, anything else to the path in backticks. Reference-style
     links get the same treatment, definition lines included.
     """
     src_dir = posixpath.dirname(rel)

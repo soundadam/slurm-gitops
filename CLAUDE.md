@@ -16,6 +16,7 @@ aalab GPU 集群的 Slurm 方案。仓库是什么、动手前的约束在
 
 ```sh
 tools/survey.sh   # 重新采集各节点硬件，并重新生成 docs/ref/inventory.md 与 docs/ref/freeze-estimate.md
+tools/survey.sh --ages   # 另外逐个文件扫各节点 /data* 的修改与读取时间，最低 IO 优先级，要跑一两个小时
 tools/feishu_docs.py push    # 把 docs/ref/ 单向镜像到飞书 wiki（ref/README.md 写进首页），只推有变化的页
 tools/feishu_docs.py check   # 取回飞书上的页，报出被人在飞书上改过的，下次 push 覆盖
 ```

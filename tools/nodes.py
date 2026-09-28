@@ -15,6 +15,14 @@ def load():
     return dict(sorted(nodes.items(), key=lambda kv: int(kv[0][1:])))
 
 
+def load_ages():
+    """inventory/ages/*.json, written by `tools/survey.sh --ages`; nodes never scanned are absent."""
+    ages = {}
+    for f in glob.glob(os.path.join(ROOT, "inventory/ages/*.json")):
+        ages[os.path.basename(f)[:-5]] = json.load(open(f))
+    return dict(sorted(ages.items(), key=lambda kv: int(kv[0][1:])))
+
+
 def tb(gb):
     return f"{gb / 1000:.1f}T" if gb >= 1000 else f"{gb}G"
 

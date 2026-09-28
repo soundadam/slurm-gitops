@@ -1,9 +1,9 @@
-"""Render docs/inventory.md from inventory/nodes/*.json (written by tools/survey.sh)."""
+"""Render docs/ref/inventory.md from inventory/nodes/*.json (written by tools/survey.sh)."""
 
 import collections
 import re
 
-from nodes import data_fs, load, tb
+from nodes import data_fs, load, load_ages, tb
 
 EXPECTED = [f"g{i}" for i in range(20)]
 
@@ -43,6 +43,53 @@ def nic_max(model):
 
 def short_gpu(name):
     return name.replace("NVIDIA ", "").replace("GeForce ", "").replace(" Generation", "")
+
+
+def span(days):
+    return f"{days // 365} 年" if days % 365 == 0 else f"{days} 天"
+
+
+def render_ages(w, nodes, ages):
+    """Bytes and files under /data* by how long since last modified and last read."""
+    if not ages:
+        return
+    edges = next(iter(ages.values()))["edges_days"]
+    labels = ([f"不到 {span(edges[0])}"] + [f"{span(a)}–{span(b)}".replace(" 年–", "–") for a, b in zip(edges, edges[1:])]
+              + [f"{span(edges[-1])}以上"])
+    year = edges.index(365) + 1  # first bucket that is a year or older
+    mounts = [(n, r) for n, a in ages.items() for r in a["mounts"].values()]
+    agg = lambda key: [sum(r[key][i] for _, r in mounts) // 10**9 for i in range(len(labels))]
+    mb, mf, ab = agg("mtime_bytes"), [sum(r["mtime_files"][i] for _, r in mounts) for i in range(len(labels))], agg("atime_bytes")
+    scanned = sum(r["bytes"] for _, r in mounts) // 10**9
+    used = sum(f["used_gb"] for n in ages if n in nodes for f in data_fs(nodes[n]))
+    files = sum(mf)
+
+    w("## 数据的年龄\n")
+    w(f"由 `tools/survey.sh --ages` 采集，采集日期：{', '.join(sorted({a['surveyed'] for a in ages.values()}))}。"
+      "逐个文件读大小和时间，不打开文件，不需要 root。容量是文件实际占的盘，文件数只算普通文件。\n")
+    w(f"- 扫了 {len(ages)} 台，扫到 {tb(scanned)}、{files / 1e6:.1f}M 个文件，"
+      f"是这些节点 `/data*` 已用量 {tb(used)} 的 {round(100 * scanned / used)}%；"
+      f"没有权限进去的目录 {sum(r['denied_dirs'] for _, r in mounts)} 个。")
+    missing = [n for n in EXPECTED if n not in ages]
+    w(f"- 没扫到：{', '.join(missing) or '无'}；网络文件系统不在内。")
+    w(f"- **一年以上没修改过的 {tb(sum(mb[year:]))}，{sum(mf[year:]) / 1e6:.1f}M 个文件，"
+      f"平均每个 {sum(mb[year:]) * 1000 / max(sum(mf[year:]), 1):.2f} MB；一年以上没读过的 {tb(sum(ab[year:]))}。**")
+    w("- 读取时间按 relatime 记：一天最多更新一次，备份、杀毒这类程序读文件也会刷新它，"
+      "所以「没读过」只会少算，不会多算。复制文件时没带 `-p`，修改时间就是复制的那一刻。\n")
+    w("| 距今 | 按修改时间：容量 | 文件数 | 平均大小 | 按读取时间：容量 |")
+    w("| --- | --- | --- | --- | --- |")
+    for i, l in enumerate(labels):
+        w(f"| {l} | {tb(mb[i])} | {mf[i] / 1e6:.1f}M | {mb[i] * 1000 / max(mf[i], 1):.2f} MB | {tb(ab[i])} |")
+    w(f"| 合计 | {tb(sum(mb))} | {files / 1e6:.1f}M | {sum(mb) * 1000 / max(files, 1):.2f} MB | {tb(sum(ab))} |\n")
+    w("各节点：\n")
+    w("| 节点 | 扫到 | 文件数 | 一年以上没修改 | 一年以上没读 | 进不去的目录 |")
+    w("| --- | --- | --- | --- | --- | --- |")
+    per = [(n, [r for m, r in a["mounts"].items()]) for n, a in ages.items()]
+    for n, rs in sorted(per, key=lambda t: -sum(r["bytes"] for r in t[1])):
+        s = lambda key, lo=year: sum(sum(r[key][lo:]) for r in rs) // 10**9
+        w(f"| {n} | {tb(sum(r['bytes'] for r in rs) // 10**9)} | {sum(r['files'] for r in rs) / 1e6:.1f}M "
+          f"| {tb(s('mtime_bytes'))} | {tb(s('atime_bytes'))} | {sum(r['denied_dirs'] for r in rs)} |")
+    w("")
 
 
 def main():
@@ -159,6 +206,8 @@ def main():
         w(f"| {n} | {k['name']} | {tb(k['size_gb'])} | {k['model']} | {series} | {rec} | {grade} | "
           f"{'、'.join(f'`{m}`' for m in k['mounts']) or '—'} | {used} |")
     w("")
+
+    render_ages(w, nodes, load_ages())
 
     w("## 各节点的盘\n")
     w("| 节点 | 盘 | 大于 100G 的文件系统（已用 / 总量） |")

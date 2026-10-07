@@ -1,6 +1,6 @@
 {
   "host": "g5",
-  "surveyed": "2026-09-28",
+  "surveyed": "2026-10-07",
   "dmi": {
     "sys_vendor": "System manufacturer",
     "product_name": "System Product Name",
@@ -138,7 +138,7 @@
       "source": "/dev/sda",
       "mount": "/data/ssd0",
       "size_gb": 984,
-      "used_gb": 765
+      "used_gb": 772
     },
     {
       "source": "/dev/sdd1",
@@ -150,7 +150,7 @@
       "source": "/dev/sdc1",
       "mount": "/data/hdd2",
       "size_gb": 3937,
-      "used_gb": 3112
+      "used_gb": 3110
     },
     {
       "source": "/dev/sdb1",
@@ -162,7 +162,7 @@
       "source": "192.168.50.229:/home/nis",
       "mount": "/home/nis",
       "size_gb": 7620,
-      "used_gb": 3920
+      "used_gb": 4352
     }
   ],
   "pci": {

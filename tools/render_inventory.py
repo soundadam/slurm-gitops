@@ -105,12 +105,11 @@ def main():
         w(f"未采集到：{', '.join(missing)}。\n")
 
     # totals
+    # one model ships with different memory sizes (RTX 4090 24G and 48G), so count by both
     gpus = collections.Counter()
-    vram = {}
     for d in nodes.values():
         for c in d["gpu"]["cards"]:
-            gpus[short_gpu(c["name"])] += 1
-            vram[short_gpu(c["name"])] = round(int(c["vram_mib"]) / 1024)
+            gpus[(short_gpu(c["name"]), round(int(c["vram_mib"]) / 1024))] += 1
     disk_kind = collections.Counter()
     for d in nodes.values():
         for k in d["disks"]:
@@ -118,8 +117,8 @@ def main():
     w("## 汇总\n")
     w(f"- 节点 {len(nodes)} 台，其中带 BMC 的服务器 "
       f"{sum(1 for d in nodes.values() if d['pci']['bmc'])} 台，其余是台式机主板。")
-    w(f"- GPU {sum(gpus.values())} 张，显存合计 {sum(vram[k] * v for k, v in gpus.items())} GiB："
-      + "、".join(f"{v}× {k}（{vram[k]}G）" for k, v in gpus.most_common()) + "。")
+    w(f"- GPU {sum(gpus.values())} 张，显存合计 {sum(g * v for (_, g), v in gpus.items())} GiB："
+      + "、".join(f"{v}× {k}（{g}G）" for (k, g), v in gpus.most_common()) + "。")
     w(f"- CPU 线程合计 {sum(d['cpu']['threads'] for d in nodes.values())}，"
       f"内存合计 {round(sum(d['memory_gib'] for d in nodes.values()))} GiB。")
     w("- 本地盘裸容量：" + "、".join(f"{k.upper()} {tb(v)}" for k, v in disk_kind.most_common()) + "。")

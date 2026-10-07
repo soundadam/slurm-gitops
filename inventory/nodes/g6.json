@@ -1,6 +1,6 @@
 {
   "host": "g6",
-  "surveyed": "2026-09-28",
+  "surveyed": "2026-10-07",
   "dmi": {
     "sys_vendor": "Gigabyte Technology Co., Ltd.",
     "product_name": "Z490 UD",
@@ -116,7 +116,7 @@
       "source": "/dev/sdb",
       "mount": "/data/ssd0",
       "size_gb": 984,
-      "used_gb": 454
+      "used_gb": 560
     },
     {
       "source": "/dev/sda",
@@ -128,7 +128,7 @@
       "source": "192.168.50.229:/home/nis",
       "mount": "/home/nis",
       "size_gb": 7620,
-      "used_gb": 3920
+      "used_gb": 4352
     }
   ],
   "pci": {

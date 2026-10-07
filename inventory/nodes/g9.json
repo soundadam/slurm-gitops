@@ -1,6 +1,6 @@
 {
   "host": "g9",
-  "surveyed": "2026-09-28",
+  "surveyed": "2026-10-07",
   "dmi": {
     "sys_vendor": "Supermicro",
     "product_name": "SYS-4029GP-TRT-BA001",
@@ -171,13 +171,13 @@
       "source": "/dev/nvme1n1p3",
       "mount": "/",
       "size_gb": 491,
-      "used_gb": 289
+      "used_gb": 303
     },
     {
       "source": "/dev/nvme0n1p1",
       "mount": "/data/ssd1",
       "size_gb": 984,
-      "used_gb": 812
+      "used_gb": 810
     },
     {
       "source": "/dev/nvme2n1p1",
@@ -207,7 +207,7 @@
       "source": "/dev/sdc1",
       "mount": "/data/ssd4",
       "size_gb": 1968,
-      "used_gb": 981
+      "used_gb": 1065
     },
     {
       "source": "/dev/sdb",
@@ -219,7 +219,7 @@
       "source": "192.168.50.229:/home/nis",
       "mount": "/home/nis",
       "size_gb": 7620,
-      "used_gb": 3920
+      "used_gb": 4352
     }
   ],
   "pci": {

@@ -1,0 +1,209 @@
+{
+  "host": "g13.nca",
+  "surveyed": "2026-10-07",
+  "dmi": {
+    "sys_vendor": "ASUSTeK COMPUTER INC.",
+    "product_name": "ESC8000A-E11",
+    "board_vendor": "ASUSTeK COMPUTER INC.",
+    "board_name": "KMPG-D32 Series",
+    "chassis_type": "23",
+    "bios_version": "1502"
+  },
+  "cpu": {
+    "model": "AMD EPYC 7K62 48-Core Processor",
+    "sockets": 2,
+    "cores_per_socket": 48,
+    "threads": 192
+  },
+  "memory_gib": 503.7,
+  "gpu": {
+    "driver": "535.309.01",
+    "error": null,
+    "cards": [
+      {
+        "index": 0,
+        "name": "NVIDIA GeForce RTX 3090",
+        "vram_mib": "24576",
+        "bus": "00000000:01:00.0",
+        "pcie_gen": "4",
+        "pcie_width": "16",
+        "power_w": "250.00"
+      },
+      {
+        "index": 1,
+        "name": "NVIDIA GeForce RTX 3090",
+        "vram_mib": "24576",
+        "bus": "00000000:24:00.0",
+        "pcie_gen": "4",
+        "pcie_width": "16",
+        "power_w": "250.00"
+      },
+      {
+        "index": 2,
+        "name": "NVIDIA GeForce RTX 3090",
+        "vram_mib": "24576",
+        "bus": "00000000:41:00.0",
+        "pcie_gen": "4",
+        "pcie_width": "16",
+        "power_w": "250.00"
+      },
+      {
+        "index": 3,
+        "name": "NVIDIA GeForce RTX 3090",
+        "vram_mib": "24576",
+        "bus": "00000000:61:00.0",
+        "pcie_gen": "4",
+        "pcie_width": "16",
+        "power_w": "250.00"
+      },
+      {
+        "index": 4,
+        "name": "NVIDIA GeForce RTX 3090",
+        "vram_mib": "24576",
+        "bus": "00000000:81:00.0",
+        "pcie_gen": "4",
+        "pcie_width": "16",
+        "power_w": "250.00"
+      },
+      {
+        "index": 5,
+        "name": "NVIDIA GeForce RTX 3090",
+        "vram_mib": "24576",
+        "bus": "00000000:A1:00.0",
+        "pcie_gen": "4",
+        "pcie_width": "16",
+        "power_w": "250.00"
+      },
+      {
+        "index": 6,
+        "name": "NVIDIA GeForce RTX 3090",
+        "vram_mib": "24576",
+        "bus": "00000000:C1:00.0",
+        "pcie_gen": "4",
+        "pcie_width": "16",
+        "power_w": "250.00"
+      },
+      {
+        "index": 7,
+        "name": "NVIDIA GeForce RTX 3090",
+        "vram_mib": "24576",
+        "bus": "00000000:E1:00.0",
+        "pcie_gen": "4",
+        "pcie_width": "16",
+        "power_w": "250.00"
+      }
+    ]
+  },
+  "nics": [
+    {
+      "name": "ens1f0",
+      "pci": "0000:22:00.0",
+      "model": "Intel Corporation I350 Gigabit Network Connection (rev 01)",
+      "state": "down",
+      "speed_mbps": null
+    },
+    {
+      "name": "ens1f1",
+      "pci": "0000:22:00.1",
+      "model": "Intel Corporation I350 Gigabit Network Connection (rev 01)",
+      "state": "down",
+      "speed_mbps": null
+    },
+    {
+      "name": "ens1f2",
+      "pci": "0000:22:00.2",
+      "model": "Intel Corporation I350 Gigabit Network Connection (rev 01)",
+      "state": "down",
+      "speed_mbps": null
+    },
+    {
+      "name": "ens1f3",
+      "pci": "0000:22:00.3",
+      "model": "Intel Corporation I350 Gigabit Network Connection (rev 01)",
+      "state": "up",
+      "speed_mbps": 1000
+    },
+    {
+      "name": "enx8e9bcd20e93c",
+      "pci": "1-1.3:2.0",
+      "model": "",
+      "state": "down",
+      "speed_mbps": null
+    }
+  ],
+  "disks": [
+    {
+      "name": "sda",
+      "kind": "hdd",
+      "tran": null,
+      "model": "WDC WUH722424ALE6L4",
+      "size_gb": 24000,
+      "mounts": [
+        "/data/hdd0"
+      ]
+    },
+    {
+      "name": "nvme1n1",
+      "kind": "nvme",
+      "tran": "nvme",
+      "model": "INTEL SSDPF2KX960HZ",
+      "size_gb": 960,
+      "mounts": [
+        "/boot/efi",
+        "/"
+      ]
+    },
+    {
+      "name": "nvme0n1",
+      "kind": "nvme",
+      "tran": "nvme",
+      "model": "INTEL SSDPF2KX038T1",
+      "size_gb": 3841,
+      "mounts": [
+        "/data/ssd0"
+      ]
+    }
+  ],
+  "filesystems": [
+    {
+      "source": "/dev/nvme1n1p2",
+      "mount": "/",
+      "size_gb": 943,
+      "used_gb": 182
+    },
+    {
+      "source": "/dev/nvme0n1p1",
+      "mount": "/data/ssd0",
+      "size_gb": 3779,
+      "used_gb": 3444
+    },
+    {
+      "source": "/dev/sda2",
+      "mount": "/data/hdd0",
+      "size_gb": 24000,
+      "used_gb": 15609
+    },
+    {
+      "source": "192.168.50.229:/home/nis",
+      "mount": "/home/nis",
+      "size_gb": 7620,
+      "used_gb": 4352
+    }
+  ],
+  "pci": {
+    "bmc": [
+      "ASPEED Technology, Inc. AST1150 PCI-to-PCI Bridge (rev 06)",
+      "ASPEED Technology, Inc. ASPEED Graphics Family (rev 52)"
+    ],
+    "physical_slots": 5,
+    "infiniband": []
+  },
+  "software": {
+    "os": "22.04",
+    "kernel": "6.8.0-138-generic",
+    "docker": false,
+    "docker_group_size": 0,
+    "apptainer": false,
+    "ipmi_dev": true
+  }
+}

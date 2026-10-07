@@ -1,6 +1,6 @@
 {
   "host": "g2",
-  "surveyed": "2026-09-28",
+  "surveyed": "2026-10-07",
   "dmi": {
     "sys_vendor": "System manufacturer",
     "product_name": "System Product Name",
@@ -109,13 +109,13 @@
       "source": "/dev/sdb1",
       "mount": "/data/hdd0",
       "size_gb": 1969,
-      "used_gb": 1312
+      "used_gb": 1313
     },
     {
       "source": "192.168.50.229:/home/nis",
       "mount": "/home/nis",
       "size_gb": 7620,
-      "used_gb": 3920
+      "used_gb": 4352
     }
   ],
   "pci": {

@@ -1,6 +1,6 @@
 {
   "host": "g18",
-  "surveyed": "2026-09-28",
+  "surveyed": "2026-10-07",
   "dmi": {
     "sys_vendor": "New H3C Technologies Co., Ltd.",
     "product_name": "H3C UniServer R5300 G6",
@@ -193,7 +193,7 @@
       "source": "/dev/nvme1n1p3",
       "mount": "/",
       "size_gb": 1826,
-      "used_gb": 38
+      "used_gb": 55
     },
     {
       "source": "/dev/sdb1",
@@ -205,7 +205,7 @@
       "source": "/dev/nvme0n1p1",
       "mount": "/data/ssd4",
       "size_gb": 1889,
-      "used_gb": 1617
+      "used_gb": 1693
     },
     {
       "source": "/dev/nvme2n1p1",
@@ -217,7 +217,7 @@
       "source": "/dev/sdc1",
       "mount": "/data/ssd0",
       "size_gb": 3937,
-      "used_gb": 3625
+      "used_gb": 3636
     },
     {
       "source": "/dev/sda1",
@@ -229,7 +229,7 @@
       "source": "192.168.50.229:/home/nis",
       "mount": "/home/nis",
       "size_gb": 7620,
-      "used_gb": 3920
+      "used_gb": 4352
     }
   ],
   "pci": {

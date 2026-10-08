@@ -24,4 +24,5 @@
 | --- | --- |
 | 网络、存储、身份、控制节点的倾向，Slurm 与作业流，不上飞书的采购考虑，以及待定问题 | [design.md](work/design.md) |
 | 现有数据怎么全量冻结、整改、再由成员清理 | [migration.md](work/migration.md) |
+| g15 / g16 先腾盘：各人目录、副本对照、做到哪了 | [g15-g16-cleanup.md](work/g15-g16-cleanup.md) |
 | 做到哪了、还缺什么 | [rollout.md](work/rollout.md) |

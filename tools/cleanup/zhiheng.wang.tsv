@@ -1,0 +1,10 @@
+# zhiheng.wang：g15 / g16 上已有副本的目录（2026-10-08 核对）
+# DNS3 → g19 /data/ssd6/yushi.wang/Datasets/DNS3；VCTK_DEMAND → g19 /data/hdd0/zhiheng.wang/VCTK_DEMAND
+# DNS_continuous → g9 /data/ssd3/zhiheng.wang/temp/DNS_continuous；fiber-offload 只剩 .venv，内容在 g19 /data/hdd0/zhiheng.wang/fiber-offload
+g15	/data/ssd0/zhiheng.wang/DNS3	list:148019:b34aea66b3c34a98c9b0f9df6910a84a	test_metrics_intrusive
+g15	/data/ssd0/zhiheng.wang/VCTK_DEMAND	list:24798:62414433606f5bd5de13b16d060938d1	trINFO_all.csv
+g15	/data/ssd0/zhiheng.wang/fiber-offload	top:2bd7537552473577e446290cd338e1af	-
+g16	/data/ssd0/zhiheng.wang/DNS3	list:148019:b34aea66b3c34a98c9b0f9df6910a84a	test_metrics_intrusive
+g16	/data/ssd0/zhiheng.wang/VCTK_DEMAND	list:24798:62414433606f5bd5de13b16d060938d1	trINFO_all.csv
+g16	/data/ssd0/zhiheng.wang/DNS_continuous	list:222003:1453b694ddf2f501f479f3b51b4a2c3e	-
+g16	/data/ssd0/zhiheng.wang/fiber-offload	top:2bd7537552473577e446290cd338e1af	-

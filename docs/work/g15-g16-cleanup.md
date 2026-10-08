@@ -21,6 +21,10 @@ g15、g16 的 `/data/ssd0`（各 916G）用到 99%，别人的个人目录占大
 集群账号 `tianchi.liu` 在 g16 上对别人的目录只有读：`/data/ssd0/zhiheng.wang/DNS_continuous` 及其子目录属主是 zhiheng.wang，
 权限 `drwxr-xr-x`，`sudo` 要密码。因此 **删别人的原目录需要 root 或属主自己动手**；
 在节点上动 root 之前先问用户（见 [scope](../../.claude/rules/scope.md)）。
+所以删除交给属主：每个人同步、校验完，发给他 [`tools/cleanup/self_delete.sh`](../../tools/cleanup/self_delete.sh)
+和他的清单 `tools/cleanup/<user>.tsv`（部署在 NFS `/home/nis/tianchi.liu/g15g16-cleanup/`），
+他在每台节点上跑 `bash /home/nis/tianchi.liu/g15g16-cleanup/self_delete.sh`。脚本先按清单复核文件清单摘要，
+有一项对不上就整机不删；清单的 keep 列是别处没有的小文件，删前拷进他的家目录 `~/archive_g15g16/<host>/`。
 迁移也会在目标端落成 tianchi.liu 的文件，所以冷存储上的归属要另行 `chown`。
 
 ## 各人的目录与处理
@@ -30,7 +34,8 @@ g15、g16 的 `/data/ssd0`（各 916G）用到 99%，别人的个人目录占大
 | 位置 | 大小 | 参照副本 | 备注 |
 | --- | --- | --- | --- |
 | g15 xiaobin.rong、zhiheng.wang；g16 zhiheng.wang、leyan.yang 的 `DNS3` | 各 44G | g19 `/data/ssd6/yushi.wang/Datasets/DNS3` | zhiheng 的多 5 个 `test_metrics_intrusive` 文件，先随迁 |
-| g15、g16 zhiheng.wang 的 `VCTK_DEMAND` | 2G | g19 `/data/hdd0/zhiheng.wang/VCTK_DEMAND` | |
+| g15、g16 zhiheng.wang 的 `VCTK_DEMAND` | 2G | g19 `/data/hdd0/zhiheng.wang/VCTK_DEMAND` | 多一个 `trINFO_all.csv`（1.7M） |
+| g15、g16 zhiheng.wang 的 `fiber-offload` | 各 6.8G | g19 `/data/hdd0/zhiheng.wang/fiber-offload` | 只剩两个 `.venv`，他 9-13 自己迁过（有 `COPY_COMPLETE`） |
 | g15 ronghui.hu `DATA/voxCeleb_1` | 38G | g19 `/data/ssd1/Benchmark/VoxCeleb1` | 前缀 `dev/wav` 不同 |
 | g15 leyan.yang DNS5 | 42G | g18、g14 `dahan.wang/Datasets/DNS5_16k` | 全量哈希 350/350；布局不同，他的代码依赖布局就改迁移 |
 | g16 ronghui.hu `LRAC-2025-test-data` | 1.3G | g19 `ronghui.hu/DATA/` | |
@@ -42,7 +47,6 @@ g15、g16 的 `/data/ssd0`（各 916G）用到 99%，别人的个人目录占大
 - g15 dong.sheng：`ears_benchmark-main` 220G（g19 的 EARS 缺 1278 个文件）、`bridge`/`logs` 106G。
 - g15 leyan.yang：`Database`、`dual-unet`、`Separation` 等。
 - ronghui.hu：g15 `AEC_Challenge` 45G（合成集）与 `AEC-PSE`；g16 `AEC_E2E`、`Weilai`、`SE_lightweight`、`MT_E2E`、`TASLP`。
-- zhiheng.wang g16：`fiber-offload` 7G（`DNS_continuous` 见下）。
 - jia.tang g16：`Data/Joint_Task_Hard_v3` 130G、`checkpoints` 18G，细节见下。
 - 整体迁：jiadong.zhao、xiaobin.rong（`Datasets` 余下约 16G）、mengtong.li、zihan.gong、xiaofeng.nan、yang.xu。
 
@@ -54,8 +58,10 @@ g15、g16 的 `/data/ssd0`（各 916G）用到 99%，别人的个人目录占大
   g9 原来缺 `train_noisy` 的 57958 个文件和一个被截断的 `14042.wav`，补传 54868 个文件（35G）。
   路径加大小逐项对比零差异，557 个抽样 md5 全一致。
 - 传输是 g16 直连 g9 的 rsync，用的临时 key 与 `/tmp` 里的临时文件已清除。
-- 用户已同意删 g16 的原目录；**还没删，卡在上一节的权限**。
-- g16 / g15 的 `DNS3`、`VCTK_DEMAND` 属有副本可删，还没动。
+- g15 上有 `DNS3`、`VCTK_DEMAND`、`fiber-offload`，g16 上另有 `DNS_continuous`，四样都有副本（见上表），没有要迁的。
+  10-08 对过参照副本：清单摘要（路径 + 大小）与 g15、g16 一致，只差 `DNS3/test_metrics_intrusive/` 5 个文件和
+  `VCTK_DEMAND/trINFO_all.csv`，两台上这几个文件 md5 相同。
+- 清单 `tools/cleanup/zhiheng.wang.tsv` 已部署；等他在 g15、g16 上各跑一次脚本，可腾出 g15 约 54G、g16 约 188G。
 
 ### jia.tang（g16，只读查看，未动）
 
@@ -69,6 +75,6 @@ g15、g16 的 `/data/ssd0`（各 916G）用到 99%，别人的个人目录占大
 
 ## 待办
 
-- [ ] 删 g16 上 zhiheng.wang 的 `DNS_continuous`（需要 root 或让属主删）。
+- [ ] zhiheng.wang 在 g15、g16 上跑 `self_delete.sh`。
 - [ ] 逐人收到回复后，按上面的表出 rsync 计划，先 dry-run 再执行，校验后才删。
 - [ ] 冷存储上迁过去的目录改属主。

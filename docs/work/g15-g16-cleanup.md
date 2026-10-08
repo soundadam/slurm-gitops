@@ -75,9 +75,11 @@ g15、g16 的 `/data/ssd0`（各 916G）用到 99%，别人的个人目录占大
 - `checkpoints` 18G：`TIDENet-SpeechRef_v6` 15G、`TIDENet-SpeechRef` 3.4G、`gtcrn_dynamic_cleaner` 585M、`TIDENet-SpeechRef_v5` 503M，另有三个几百 K 的小目录。
 - `dataset/`、`logs/` 是空目录。
 - 10-08 整个 `/data/ssd0/jia.tang/` 迁到 g19 `/data/hdd0/jia.tang/archive_g15g16/g16/`：g16 直连 g19 rsync，125385 个文件 158.6 GB，
-  散文件落地，没有打包。train / valid / test 的 noisy 与 clean 各 60000 / 1000 / 1000。
+  train / valid / test 的 noisy 与 clean 各 60000 / 1000 / 1000。
   校验：`Data`（124003 个文件）、`checkpoints`（1382 个）的清单摘要两边一致；checkpoints 全部、3 个 csv、wav 每 400 抽 1，共 1695 个 md5 全一致。
   临时 key 已从 `authorized_keys` 撤掉。
+- 之后在 g19 本机把 `Data` 打成 `Data.tar.zst`（109G），解一遍列出的 124003 个文件路径和大小与散文件一致，散文件已删。
+  g19 上现在是 `Data.tar.zst`、`checkpoints/`（散着，大文件）和两个空目录。
 - 清单 `tools/cleanup/jia.tang.tsv`（`Data`、`checkpoints`）已部署，等他在 g16 上跑脚本，可腾出约 149G。
 
 ## 待办

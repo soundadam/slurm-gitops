@@ -61,7 +61,7 @@ g15、g16 的 `/data/ssd0`（各 916G）用到 99%，别人的个人目录占大
 
 - `Data/Joint_Task_Hard_v3` 130G：多说话人加噪声加房间混响的合成语音分离集，`train` 60000 对、`valid` 1000 对、`test` 1000 对
   （`clean/` 与 `noisy/` 各一份 wav，每个 split 一个 csv，列有说话人数、DOA、距离、SIR、噪声类型与 SNR、房间尺寸与 RT60）。
-  这是他自己生成的合成集，不是公开数据集。已在 g19、g18、g14、g9 上按名字找过，没有同名目录。
+  这是他自己生成的合成集，不是公开数据集。只在 g19 上按名字找过（`maxdepth 5`），没有同名目录；g18、g14、g9、g15 还没查。
   其中 `train/` 一份 126G，csv 记录了生成参数，原则上可由他的生成脚本重建，要不要重建由他决定。
 - `checkpoints` 18G：`TIDENet-SpeechRef_v6` 15G、`TIDENet-SpeechRef` 3.4G、`gtcrn_dynamic_cleaner` 585M、`TIDENet-SpeechRef_v5` 503M，另有三个几百 K 的小目录。
 - `dataset/` 空，`logs/` 小。

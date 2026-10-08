@@ -9,6 +9,7 @@ g15、g16 的 `/data/ssd0`（各 916G）用到 99%，别人的个人目录占大
 - 目录布局固定：`/data/ssd0/<user>/<数据集或项目>`，用户数十个、层级浅，只需 `du -sh /data/ssd0/*/*`，不做全盘扫描。
 - 冷存储 g19 `/data/hdd0`（空闲约 8.8T）；落点 `/data/hdd0/<user>/archive_g15g16/<host>/`。
 - 有一致副本的删，没有的迁到冷存储；**先复制、再逐文件校验、校验过才删原目录**。
+  迁冷存储怎么打包、怎么校验见 [cold-archive](../../.claude/rules/cold-archive.md)。
 - **逐人由用户点名才动**；没回复的人不设默认处理。g19 上的公共 DNS3 / DNS5 / VoxCeleb1 不动。
 - 校验：`find . -type f -printf '%P\t%s\n' | sort` 比路径加大小，再每 400 个文件抽一个 `md5sum`；
   DNS5 这类文件大小全一样的整套哈希。增量补传用 `rsync -a --size-only --files-from`。
@@ -25,7 +26,8 @@ g15、g16 的 `/data/ssd0`（各 916G）用到 99%，别人的个人目录占大
 和他的清单 `tools/cleanup/<user>.tsv`（部署在 NFS `/home/nis/tianchi.liu/g15g16-cleanup/`），
 他在每台节点上跑 `bash /home/nis/tianchi.liu/g15g16-cleanup/self_delete.sh`。脚本先按清单复核文件清单摘要，
 有一项对不上就整机不删；清单的 keep 列是别处没有的小文件，删前拷进他的家目录 `~/archive_g15g16/<host>/`。
-迁移也会在目标端落成 tianchi.liu 的文件，所以冷存储上的归属要另行 `chown`。
+迁移也会在目标端落成 tianchi.liu 的文件，所以冷存储上的归属要另行 `chown`；
+在那之前落点目录建成 setgid、组可写（g19 上成员同属 gid 1000），属主自己能挪、能删。
 
 ## 各人的目录与处理
 
@@ -61,20 +63,25 @@ g15、g16 的 `/data/ssd0`（各 916G）用到 99%，别人的个人目录占大
 - g15 上有 `DNS3`、`VCTK_DEMAND`、`fiber-offload`，g16 上另有 `DNS_continuous`，四样都有副本（见上表），没有要迁的。
   10-08 对过参照副本：清单摘要（路径 + 大小）与 g15、g16 一致，只差 `DNS3/test_metrics_intrusive/` 5 个文件和
   `VCTK_DEMAND/trINFO_all.csv`，两台上这几个文件 md5 相同。
-- 清单 `tools/cleanup/zhiheng.wang.tsv` 已部署；等他在 g15、g16 上各跑一次脚本，可腾出 g15 约 54G、g16 约 188G。
+- 10-08 他在 g15、g16 上跑完脚本，两台上他的目录已空；留存的 6 个小文件在他家目录 `~/archive_g15g16/{g15,g16}/`，md5 与原件一致。
+  删后复查过参照副本仍在：g9 的 `DNS_continuous` 清单摘要不变，g19 的 `VCTK_DEMAND`、`fiber-offload`、`DNS3` 都在。**zhiheng.wang 清完。**
 
-### jia.tang（g16，只读查看，未动）
+### jia.tang（g16）
 
 - `Data/Joint_Task_Hard_v3` 130G：多说话人加噪声加房间混响的合成语音分离集，`train` 60000 对、`valid` 1000 对、`test` 1000 对
   （`clean/` 与 `noisy/` 各一份 wav，每个 split 一个 csv，列有说话人数、DOA、距离、SIR、噪声类型与 SNR、房间尺寸与 RT60）。
   这是他自己生成的合成集，不是公开数据集。只在 g19 上按名字找过（`maxdepth 5`），没有同名目录；g18、g14、g9、g15 还没查。
   其中 `train/` 一份 126G，csv 记录了生成参数，原则上可由他的生成脚本重建，要不要重建由他决定。
 - `checkpoints` 18G：`TIDENet-SpeechRef_v6` 15G、`TIDENet-SpeechRef` 3.4G、`gtcrn_dynamic_cleaner` 585M、`TIDENet-SpeechRef_v5` 503M，另有三个几百 K 的小目录。
-- `dataset/` 空，`logs/` 小。
-- 下一步：等用户点名后迁到 g19 冷存储；迁前核对 `train/noisy` 与 `train/clean` 的文件数（各 60000）并逐文件校验。
+- `dataset/`、`logs/` 是空目录。
+- 10-08 整个 `/data/ssd0/jia.tang/` 迁到 g19 `/data/hdd0/jia.tang/archive_g15g16/g16/`：g16 直连 g19 rsync，125385 个文件 158.6 GB，
+  散文件落地，没有打包。train / valid / test 的 noisy 与 clean 各 60000 / 1000 / 1000。
+  校验：`Data`（124003 个文件）、`checkpoints`（1382 个）的清单摘要两边一致；checkpoints 全部、3 个 csv、wav 每 400 抽 1，共 1695 个 md5 全一致。
+  临时 key 已从 `authorized_keys` 撤掉。
+- 清单 `tools/cleanup/jia.tang.tsv`（`Data`、`checkpoints`）已部署，等他在 g16 上跑脚本，可腾出约 149G。
 
 ## 待办
 
-- [ ] zhiheng.wang 在 g15、g16 上跑 `self_delete.sh`。
-- [ ] 逐人收到回复后，按上面的表出 rsync 计划，先 dry-run 再执行，校验后才删。
+- [ ] jia.tang 在 g16 上跑 `self_delete.sh`。
+- [ ] 逐人收到回复后，按上面的表出迁移计划，先 dry-run 再执行，校验后才删。
 - [ ] 冷存储上迁过去的目录改属主。

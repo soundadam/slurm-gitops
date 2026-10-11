@@ -23,9 +23,12 @@ g15、g16 的 `/data/ssd0`（各 916G）用到 99%，别人的个人目录占大
 权限 `drwxr-xr-x`，`sudo` 要密码。因此 **删别人的原目录需要 root 或属主自己动手**；
 在节点上动 root 之前先问用户（见 [scope](../../.claude/rules/scope.md)）。
 所以删除交给属主：每个人同步、校验完，发给他 [`tools/cleanup/self_delete.sh`](../../tools/cleanup/self_delete.sh)
-和他的清单 `tools/cleanup/<user>.tsv`（部署在 NFS `/home/nis/tianchi.liu/g15g16-cleanup/`），
-他在每台节点上跑 `bash /home/nis/tianchi.liu/g15g16-cleanup/self_delete.sh`。脚本先按清单复核文件清单摘要，
-有一项对不上就整机不删；清单的 keep 列是别处没有的小文件，删前拷进他的家目录 `~/archive_g15g16/<host>/`。
+和他的清单 `tools/cleanup/<user>.tsv`，部署在 NFS `/home/nis/tianchi.liu/g15g16-cleanup/`，旁边的 `<user>/` 放核对时的完整文件清单
+（几十万行，不进仓）。他在每台节点上先跑 `bash /home/nis/tianchi.liu/g15g16-cleanup/self_delete.sh` 只检查，
+看过报告再加 `--delete`。脚本逐目录打印原目录现在的文件数与大小、副本在哪与当时怎么核的，原目录与完整清单逐项比，
+对不上就列出是哪些文件；副本当场登到副本节点复查。有一项不通过就整机不删。清单格式见脚本开头。
+迁冷存储的目录用 [`pack.sh`](../../tools/cleanup/pack.sh) 在源端打包流过去，
+冷存储上 [`verify_archive.sh`](../../tools/cleanup/verify_archive.sh) 校验通过后直接打印清单行。
 迁移也会在目标端落成 tianchi.liu 的文件，所以冷存储上的归属要另行 `chown`；
 在那之前落点目录建成 setgid、组可写（g19 上成员同属 gid 1000），属主自己能挪、能删。
 
@@ -80,10 +83,16 @@ g15、g16 的 `/data/ssd0`（各 916G）用到 99%，别人的个人目录占大
   临时 key 已从 `authorized_keys` 撤掉。
 - 之后在 g19 本机把 `Data` 打成 `Data.tar.zst`（109G），解一遍列出的 124003 个文件路径和大小与散文件一致，散文件已删。
   g19 上现在是 `Data.tar.zst`、`checkpoints/`（散着，大文件）和两个空目录。
-- 清单 `tools/cleanup/jia.tang.tsv`（`Data`、`checkpoints`）已部署，等他在 g16 上跑脚本，可腾出约 149G。
+- 他在 g16 上跑完脚本，`Data`、`checkpoints` 已删，只剩两个空目录。**jia.tang 清完。**
+
+### ronghui.hu（g15、g16）
+
+- 10-11 开始迁：g15 `AEC-PSE`、`DATA/AEC_Challenge`，g16 `AEC_Challenge`、`LRAC/TASLP`、`AEC_Weilai`、`SE_lightweight`、`MT_E2E`、`AEC_E2E`，
+  各打成一个包流到 g19 `/data/hdd0/ronghui.hu/archive_g15g16/<host>/`，约 410G。
+- `DATA/voxCeleb_1`、`LRAC/LRAC-2025-test-data` 有副本（见上表），不迁，进清单直接删；g16 根下一个 2.3M 的 wav 由他自己处理。
 
 ## 待办
 
-- [ ] jia.tang 在 g16 上跑 `self_delete.sh`。
+- [ ] ronghui.hu：传完校验、出清单，他在 g15、g16 上跑 `self_delete.sh`。
 - [ ] 逐人收到回复后，按上面的表出迁移计划，先 dry-run 再执行，校验后才删。
 - [ ] 冷存储上迁过去的目录改属主。

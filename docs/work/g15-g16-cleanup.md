@@ -90,9 +90,14 @@ g15、g16 的 `/data/ssd0`（各 916G）用到 99%，别人的个人目录占大
 - 10-11 开始迁：g15 `AEC-PSE`、`DATA/AEC_Challenge`，g16 `AEC_Challenge`、`LRAC/TASLP`、`AEC_Weilai`、`SE_lightweight`、`MT_E2E`、`AEC_E2E`，
   各打成一个包流到 g19 `/data/hdd0/ronghui.hu/archive_g15g16/<host>/`，约 410G。
 - `DATA/voxCeleb_1`、`LRAC/LRAC-2025-test-data` 有副本（见上表），不迁，进清单直接删；g16 根下一个 2.3M 的 wav 由他自己处理。
+- 8 个包共 238G，在 g19 上逐个解包核对，文件路径和大小与原目录逐项一致，包 md5 与源端流一致。
+- `voxCeleb_1` 对 g19 `/data/ssd1/Benchmark/VoxCeleb1`：除 `vox1_meta.csv`、`voxceleb1_test_v2.txt` 外文件全在、大小相同，抽 384 个 md5 一致；
+  `LRAC-2025-test-data` 对 g19 `/data/ssd6/ronghui.hu/DATA/LRAC-2025-test-data`：5331 个文件全在，抽 265 个 md5 一致，
+  他用 `change_path.py` 改过路径的 16 个 csv/scp 与这个脚本两边不同。这几个小文件进清单的 keep 列，删前拷进他家目录。
+- 清单 `tools/cleanup/ronghui.hu.tsv` 已部署，以 tianchi.liu 预跑过只检查模式，除属主一项外全部通过。他删完 g15 腾约 100G、g16 约 340G。
 
 ## 待办
 
-- [ ] ronghui.hu：传完校验、出清单，他在 g15、g16 上跑 `self_delete.sh`。
+- [ ] ronghui.hu 在 g15、g16 上跑 `self_delete.sh`，看过报告再 `--delete`。
 - [ ] 逐人收到回复后，按上面的表出迁移计划，先 dry-run 再执行，校验后才删。
 - [ ] 冷存储上迁过去的目录改属主。

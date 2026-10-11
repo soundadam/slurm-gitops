@@ -13,7 +13,7 @@
 # 清单每行六列，制表符分隔：
 #   host  dir  check  copy  verified  keep
 #   check     list:<文件数>:<md5>：find <dir> -type f -printf '%P\t%s\n' | LC_ALL=C sort | md5sum；
-#             完整清单在 <用户名>/<host>_<目录名>.list
+#             完整清单在清单旁边的 <清单名>/<host>_<目录名>.list
 #   copy      tar:<节点>:<路径>:<字节数>   pack.sh 打的包，复查包在、大小不变
 #             dir:<节点>:<路径>[:<前缀>=<前缀>,...]   别处的散目录，复查原目录每个文件在副本里都有、
 #                                                     大小相同；两边目录前缀不同时写换算
@@ -34,6 +34,7 @@ for a in "$@"; do
   esac
 done
 manifest=${args[0]:-$here/$user.tsv}
+listings=${manifest%.tsv}
 [[ -f $manifest ]] || { echo "没有 $user 的清单：$manifest" >&2; exit 1; }
 
 mkdir -p ~/archive_g15g16
@@ -52,7 +53,7 @@ cleanup() {
 trap cleanup EXIT
 
 human() { numfmt --to=iec --suffix=B --format=%.1f "$1"; }
-total_bytes() { awk -F'\t' '{s+=$2} END{printf "%d", s}' "$1"; }
+total_bytes() { awk -F'\t' '{s+=$2} END{printf "%.0f", s}' "$1"; }
 count() { wc -l < "$1" | tr -d ' '; }
 
 # 扫目录，进度打在终端上，不进报告
@@ -153,7 +154,7 @@ for row in "${rows[@]}"; do
   [[ -z $(find "$dir" ! -readable -print -quit 2>/dev/null) ]] || { echo "    里面有读不了的文件"; bad=1; }
 
   IFS=: read -r _ want_n want_md5 <<< "$check"
-  listing=$here/$user/${host}_$(basename "$dir").list
+  listing=$listings/${host}_$(basename "$dir").list
   size="?"
   if [[ ! -f $listing || $(md5sum < "$listing" | cut -c1-32) != "$want_md5" ]]; then
     echo "    核对时的清单 $listing 不在或被改过"; bad=1
@@ -171,7 +172,10 @@ for row in "${rows[@]}"; do
     echo "    核对    $verified"
     check_copy "$copy" "$listing" "$keep" || bad=1
   fi
-  [[ $keep == - ]] || echo "    留存    删前把 ${keep//,/、} 拷到 ~/archive_g15g16/$host/$(basename "$dir")/"
+  if [[ $keep != - ]]; then
+    echo "    留存    别处没有的 $(tr , '\n' <<< "$keep" | wc -l) 个文件，删前拷到 ~/archive_g15g16/$host/$(basename "$dir")/："
+    tr , '\n' <<< "$keep" | sed 's/^/              /'
+  fi
   for p in /proc/[0-9]*; do
     cwd=$(readlink "$p/cwd" 2>/dev/null) || continue
     [[ $cwd == "$dir" || $cwd == "$dir"/* ]] && { echo "    进程 ${p#/proc/} 的工作目录在里面"; bad=1; }

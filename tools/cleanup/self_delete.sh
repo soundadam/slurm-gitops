@@ -1,24 +1,25 @@
 #!/usr/bin/env bash
-# 属主自己删 g15 / g16 上已经有副本的目录。
+# 属主自己删节点上已经有副本的目录。每一轮清盘部署一份到 NFS 家目录下的 <轮>-cleanup/：
 #
-#   bash /home/nis/tianchi.liu/g15g16-cleanup/self_delete.sh            # 只检查，出报告
-#   bash /home/nis/tianchi.liu/g15g16-cleanup/self_delete.sh --delete   # 检查全过后删
+#   bash /home/nis/tianchi.liu/g12-cleanup/self_delete.sh            # 只检查，出报告
+#   bash /home/nis/tianchi.liu/g12-cleanup/self_delete.sh --delete   # 检查全过后删
 #
 # 在每台要清的节点上以属主身份跑。清单是同目录下的 <用户名>.tsv，只取本机的行。
 # 每个目录打印三样：原目录现在扫到的文件数与大小、副本在哪与当时怎么核的、副本现在还在不在。
 # 原目录和核对时记下的完整清单逐项比（路径 + 大小），对不上就列出哪些文件不一样；
 # 副本当场登到副本所在节点复查（可能要输一次密码）。任何一个目录不通过，本机什么都不删。
-# 报告同时存到 ~/archive_g15g16/report-<host>-<时间>.txt。
+# 报告同时存到 ~/archive_<轮>/report-<host>-<时间>.txt（g15g16-cleanup/ 的是 ~/archive_g15g16/）。
 #
 # 清单每行六列，制表符分隔：
 #   host  dir  check  copy  verified  keep
 #   check     list:<文件数>:<md5>：find <dir> -type f -printf '%P\t%s\n' | LC_ALL=C sort | md5sum；
-#             完整清单在清单旁边的 <清单名>/<host>_<目录名>.list
+#             完整清单在清单旁边的 <清单名>/<host>_<路径>.list，路径里的 / 换成 _
+#             （g12 的 /data/ssd1/lrac_dataset → g12_data_ssd1_lrac_dataset.list；同名目录在一台机器上可以有好几份）
 #   copy      tar:<节点>:<路径>:<字节数>   pack.sh 打的包，复查包在、大小不变
 #             dir:<节点>:<路径>[:<前缀>=<前缀>,...]   别处的散目录，复查原目录每个文件在副本里都有、
 #                                                     大小相同；两边目录前缀不同时写换算
 #   verified  当时怎么核的，原样打印
-#   keep      逗号分隔的相对路径（别处没有的小文件），删之前拷进 ~/archive_g15g16/<host>/<目录名>/；没有写 -
+#   keep      逗号分隔的相对路径（别处没有的小文件），删之前拷进 ~/archive_<轮>/<host>/<原路径>/；没有写 -
 set -euo pipefail
 
 here=$(cd "$(dirname "$0")" && pwd)
@@ -29,7 +30,7 @@ args=()
 for a in "$@"; do
   case $a in
     --delete) mode=delete ;;
-    -h|--help) sed -n '2,23p' "$0"; exit 0 ;;
+    -h|--help) sed -n '2,24p' "$0"; exit 0 ;;
     *) args+=("$a") ;;
   esac
 done
@@ -37,8 +38,9 @@ manifest=${args[0]:-$here/$user.tsv}
 listings=${manifest%.tsv}
 [[ -f $manifest ]] || { echo "没有 $user 的清单：$manifest" >&2; exit 1; }
 
-mkdir -p ~/archive_g15g16
-report=~/archive_g15g16/report-$host-$(date +%m%d-%H%M%S).txt
+stash=~/archive_$(basename "$here" -cleanup)
+mkdir -p "$stash"
+report=$stash/report-$host-$(date +%m%d-%H%M%S).txt
 exec > >(tee "$report") 2>&1
 
 tty=/dev/null
@@ -154,7 +156,7 @@ for row in "${rows[@]}"; do
   [[ -z $(find "$dir" ! -readable -print -quit 2>/dev/null) ]] || { echo "    里面有读不了的文件"; bad=1; }
 
   IFS=: read -r _ want_n want_md5 <<< "$check"
-  listing=$listings/${host}_$(basename "$dir").list
+  listing=$listings/${host}${dir//\//_}.list
   size="?"
   if [[ ! -f $listing || $(md5sum < "$listing" | cut -c1-32) != "$want_md5" ]]; then
     echo "    核对时的清单 $listing 不在或被改过"; bad=1
@@ -173,7 +175,7 @@ for row in "${rows[@]}"; do
     check_copy "$copy" "$listing" "$keep" || bad=1
   fi
   if [[ $keep != - ]]; then
-    echo "    留存    别处没有的 $(tr , '\n' <<< "$keep" | wc -l) 个文件，删前拷到 ~/archive_g15g16/$host/$(basename "$dir")/："
+    echo "    留存    别处没有的 $(tr , '\n' <<< "$keep" | wc -l) 个文件，删前拷到 $stash/$host$dir/："
     tr , '\n' <<< "$keep" | sed 's/^/              /'
   fi
   for p in /proc/[0-9]*; do
@@ -230,7 +232,7 @@ disks "${dirs[@]}" > "$work/df_before"
 for row in "${ok[@]}"; do
   IFS=$'\t' read -r dir check copy verified keep <<< "$row"
   if [[ $keep != - ]]; then
-    dest=~/archive_g15g16/$host/$(basename "$dir")
+    dest=$stash/$host$dir
     IFS=, read -ra rels <<< "$keep"
     for rel in "${rels[@]}"; do
       mkdir -p "$dest/$(dirname "$rel")"
